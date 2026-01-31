@@ -241,7 +241,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.92, y: 1.92}
+  m_Size: {x: 0.92, y: 2.8}
   m_EdgeRadius: 0
 --- !u!1 &5875951141580902365
 GameObject:
@@ -379,7 +379,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.92, y: 1.92}
+  m_Size: {x: 0.92, y: 2.8}
   m_EdgeRadius: 0
 --- !u!1 &8355157156484916424
 GameObject:
@@ -413,8 +413,8 @@ Transform:
   m_Children:
   - {fileID: 3794843070065860961}
   - {fileID: 9164871020146755098}
-  - {fileID: 4104425497274715893}
   - {fileID: 6543118713907873281}
+  - {fileID: 4104425497274715893}
   - {fileID: 5234426384125122560}
   - {fileID: 8445147764382259362}
   m_Father: {fileID: 0}
@@ -433,9 +433,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Arena
   openY: 0.2
   closeY: -1.9
+  walls:
+  - {fileID: 4825326076736364696}
+  - {fileID: 5004205897082231757}
   gates:
   - {fileID: 6543118713907873281}
   - {fileID: 5234426384125122560}
+  openWallColliderSize: 1.95
+  closeWallColliderSize: 2.8
 --- !u!1001 &3077564956393380731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -488,6 +493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u67F5\u6B04 - \u53F3"
       objectReference: {fileID: 0}
+    - target: {fileID: 9209060633532561685, guid: cb76fb0724fcdeb409a939036c33c12e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -512,7 +521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7066673474306130811, guid: cb76fb0724fcdeb409a939036c33c12e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.90537
+      value: -1.9053701
       objectReference: {fileID: 0}
     - target: {fileID: 7066673474306130811, guid: cb76fb0724fcdeb409a939036c33c12e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -549,6 +558,10 @@ PrefabInstance:
     - target: {fileID: 7325109664765629878, guid: cb76fb0724fcdeb409a939036c33c12e, type: 3}
       propertyPath: m_Name
       value: "\u67F5\u6B04 - \u5DE6"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9209060633532561685, guid: cb76fb0724fcdeb409a939036c33c12e, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
