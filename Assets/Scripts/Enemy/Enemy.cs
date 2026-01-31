@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour
             switch (state)
             {
                 case Enemystate.Rise:
-                    //鑽出動畫
                     break;
                 case Enemystate.Attack:
                     Attack();
@@ -77,7 +76,7 @@ public class Enemy : MonoBehaviour
     public void GetDamage(int damageValue)
     {
         enemyHp -= damageValue; //damage
-        Debug.Log($"現在HP剩餘: {enemyHp}");
+        Debug.Log($"left HP: {enemyHp}");
         if (enemyHp <= 0)
         {
             //死亡邏輯
