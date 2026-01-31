@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private PlayerHorizontalMovement player;
+    public Enemystate state;
     //public AttackArea;
     public float speed = 0f;
     public float attackValue = 0f;
     public int dir = 1;
-    private Rigidbody2D rigg2D;
-    public Enemystate state;
-    public PlayerHorizontalMovement player;
+    public float distanceRange;
+
     public void Start()
     {
-        rigg2D = GetComponent<Rigidbody2D>();
         player = FindAnyObjectByType<PlayerHorizontalMovement>();
         state = Enemystate.Move;
     }
@@ -27,18 +27,34 @@ public class Enemy : MonoBehaviour
                 //鑽出動畫
                 break;
             case Enemystate.Attack:
-
+                Attack();
                 break;
             case Enemystate.Move:
-                Move();
+                Move(distanceRange);
                 break;
         }
     }
-    private void Move(/*玩家或是對應的Transform*/)
+    private void Move(float distanceRange)
     {
-        dir = player.transform.position.x < transform.position.x ? -1 : 1;
+        bool LR = player.transform.position.x < transform.position.x;
+        int dir = this.dir;
+        dir = LR ? -1 : 1;
+        transform.localScale = new Vector3(dir, 1, 1);
 
-        rigg2D.AddForce(new Vector2(dir * speed * Time.fixedDeltaTime, transform.position.y));
+        transform.Translate(new Vector3(speed * dir * Time.fixedDeltaTime, 0, 0));
+        float dist = Vector3.Distance(player.transform.position, transform.position);
+        if (dist < distanceRange)
+        {
+            state = Enemystate.Attack;
+        }
+    }
+    public void Attack()
+    {
+        float dist = Vector3.Distance(player.transform.position, transform.position);
+        if (dist >= distanceRange)
+        {
+            state = Enemystate.Move;
+        }
     }
     public enum Enemystate
     {
