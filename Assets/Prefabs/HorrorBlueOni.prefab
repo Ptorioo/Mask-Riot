@@ -88,9 +88,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7133666864937431974}
   - component: {fileID: 8309126579141781814}
+  - component: {fileID: 3421075877965366579}
   - component: {fileID: 208041521233449872}
   - component: {fileID: 5147961028899955590}
-  - component: {fileID: 3421075877965366579}
   m_Layer: 7
   m_Name: HorrorBlueOni
   m_TagString: Untagged
@@ -173,6 +173,27 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &3421075877965366579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5278089705342564016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6f415f66eacbb4eb82b5652d7061b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  state: 1
+  faction: 0
+  enemyHp: 10
+  speed: 1
+  attackValue: 0
+  dir: 1
+  distanceRange: 2
+  maskObj: {fileID: 8938546880770124857, guid: 16d48d2d36deca54e89968ca8a8818e5, type: 3}
+  renderer: {fileID: 0}
 --- !u!50 &208041521233449872
 Rigidbody2D:
   serializedVersion: 5
@@ -237,23 +258,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.13, y: 1.64}
   m_Direction: 0
---- !u!114 &3421075877965366579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5278089705342564016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec6f415f66eacbb4eb82b5652d7061b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  state: 1
-  faction: 0
-  enemyHp: 10
-  speed: 1
-  attackValue: 0
-  dir: 1
-  distanceRange: 2
-  renderer: {fileID: 0}

@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public int dir = 1;
     public float distanceRange;
 
+    public GameObject maskObj;
+
     public SpriteRenderer renderer;
 
     public void Start()
@@ -89,6 +91,8 @@ public class Enemy : MonoBehaviour
     [ContextMenu("¦º")]
     public void Die()
     {
+        GameObject tempMask = Instantiate(maskObj, transform.position, Quaternion.identity);
+        tempMask.transform.SetParent(null);
         Destroy(gameObject);
     }
     public enum Enemystate
