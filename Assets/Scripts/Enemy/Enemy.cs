@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
         bool LR = player.transform.position.x < transform.position.x;
         int dir = this.dir;
         dir = LR ? -1 : 1;
-        transform.localScale = new Vector3(dir, 1, 1);
+        //transform.localScale = new Vector3(transform.localScale.x, 1, 1);
 
         transform.Translate(new Vector3(speed * dir * Time.fixedDeltaTime, 0, 0));
         float dist = Vector3.Distance(player.transform.position, transform.position);
