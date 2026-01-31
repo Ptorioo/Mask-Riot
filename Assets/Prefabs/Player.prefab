@@ -80,7 +80,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7127193123590645955, guid: 7609ebf1234766d4a8695cf72ba4f937, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,7 +100,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7038858367243697981}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e69ca844c4897c741acfed564012c904, type: 2}
   m_CullingMode: 0
@@ -201,7 +201,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7783813424544337531, guid: 46331f5641bef1d4c9974c1cd90f4b94, type: 3}
+  m_Sprite: {fileID: -1667913109096744779, guid: b134e4e34c0d5ad40988d3c944922f4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHorizontalMovement
   moveSpeed: 5
   jumpForce: 7
+  _animator: {fileID: 9023175823110753452}
 --- !u!61 &6290094267201599797
 BoxCollider2D:
   m_ObjectHideFlags: 0

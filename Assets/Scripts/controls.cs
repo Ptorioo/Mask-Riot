@@ -8,9 +8,11 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool isGrounded;
-    private bool attacking;
 
+    private bool attacking = false;
     private float originalScaleX;
+
+    [SerializeField] private Animator _animator;
 
     void Awake()
     {
@@ -28,31 +30,22 @@ public class PlayerHorizontalMovement : MonoBehaviour
         if (left)
         {
             move = -1f;
-            transform.localScale = new Vector3(
-                -originalScaleX,
-                transform.localScale.y,
-                transform.localScale.z
-            );
+            transform.localScale = new Vector3(-originalScaleX, transform.localScale.y, transform.localScale.z);
         }
         else if (right)
         {
             move = 1f;
-            transform.localScale = new Vector3(
-                originalScaleX,
-                transform.localScale.y,
-                transform.localScale.z
-            );
+            transform.localScale = new Vector3(originalScaleX, transform.localScale.y, transform.localScale.z);
         }
 
-        if (Keyboard.current.zKey.isPressed)
+        // Fire once per press; animation will finish even after release.
+        if (Keyboard.current.zKey.wasPressedThisFrame)
         {
             attacking = true;
+            _animator.SetTrigger("Attack");
         }
 
-        rb.linearVelocity = new Vector2(
-            move * moveSpeed,
-            rb.linearVelocity.y
-        );
+        rb.linearVelocity = new Vector2(move * moveSpeed, rb.linearVelocity.y);
 
         if (isGrounded && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
@@ -61,12 +54,16 @@ public class PlayerHorizontalMovement : MonoBehaviour
         }
     }
 
+    // Called by an Animation Event at the end of the attack clip
+    public void EndAttack()
+    {
+        attacking = false;
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.contacts[0].normal.y > 0.5f)
-        {
             isGrounded = true;
-        }
     }
 
     public bool IsAttacking => attacking;
