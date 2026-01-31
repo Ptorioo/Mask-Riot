@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe11801ed27cbe47b749aad4247f702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHorizontalMovement
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 797114709403978606}
   moveSpeed: 5
   jumpForce: 7
   gravity: -20

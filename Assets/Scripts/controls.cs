@@ -6,68 +6,55 @@ public class PlayerHorizontalMovement : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public float moveSpeed = 6f;
     public float jumpForce = 7f;
-    public float gravity = -20f;
 
-    private float verticalVelocity;
+    private Rigidbody2D rb;
     private bool isGrounded;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
-        // -------- Horizontal movement --------
+        // -------- Horizontal input --------
         float move = 0f;
-
-        int heldDirection = 1;
 
         bool left = Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed;
         bool right = Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed;
 
-
         if (left)
         {
-            heldDirection = -1;
+            move = -1f;
             spriteRenderer.flipX = true;
         }
-        else if (right) {
-            heldDirection = 1;
+        else if (right)
+        {
+            move = 1f;
             spriteRenderer.flipX = false;
         }
 
-        move = heldDirection * ((left ? 1 : 0) + (right ? 1 : 0) > 0 ? 1 : 0);
-
-        // -------- Ground check (simple) --------
-        if (transform.position.y <= 0f)
-        {
-            isGrounded = true;
-            verticalVelocity = 0f;
-
-            // clamp to ground
-            transform.position = new Vector3(
-                transform.position.x,
-                0f,
-                transform.position.z
-            );
-        }
-        else
-        {
-            isGrounded = false;
-        }
+        // -------- Apply horizontal movement --------
+        rb.velocity = new Vector2(
+            move * moveSpeed,
+            rb.velocity.y
+        );
 
         // -------- Jump --------
         if (isGrounded && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            verticalVelocity = jumpForce;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
         }
+    }
 
-        // -------- Gravity --------
-        verticalVelocity += gravity * Time.deltaTime;
-
-        Vector3 velocity = new Vector3(
-            move * moveSpeed,
-            verticalVelocity,
-            0f
-        );
-
-        transform.Translate(velocity * Time.deltaTime);
+    // -------- Ground detection --------
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // basic ground check
+        if (collision.contacts[0].normal.y > 0.5f)
+        {
+            isGrounded = true;
+        }
     }
 }
