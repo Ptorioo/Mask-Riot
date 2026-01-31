@@ -3,28 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class HitBox : MonoBehaviour
 {
-    public SpriteRenderer playerSprite;
     public LayerMask hitMask = ~0;
 
     public BoxCollider2D box;
-
-    private float originalOffsetX;
 
     public PlayerHorizontalMovement playerControl;
 
     void Awake()
     {
         if (!box) box = GetComponent<BoxCollider2D>();
-        originalOffsetX = box.offset.x;
     }
 
     void LateUpdate()
     {
-        // -------- Flip hitbox horizontally --------
-        Vector2 offset = box.offset;
-        offset.x = playerSprite && playerSprite.flipX ? -originalOffsetX : originalOffsetX;
-        box.offset = offset;
-
         DetectHits();
     }
 
@@ -60,7 +51,7 @@ public class HitBox : MonoBehaviour
             var enemy = col.GetComponentInParent<Enemy>();
             if (enemy != null) {
                 if(playerControl != null && playerControl.IsAttacking)
-                    enemy.GetDamage();
+                    enemy.GetDamage(1);
                 // Debug.Log(enemy.gameObject.name);
             }
                 

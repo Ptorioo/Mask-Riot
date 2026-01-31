@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerHorizontalMovement : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
     public float moveSpeed = 6f;
     public float jumpForce = 7f;
 
@@ -11,14 +10,16 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private bool isGrounded;
     private bool attacking;
 
+    private float originalScaleX;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        originalScaleX = Mathf.Abs(transform.localScale.x);
     }
 
     void Update()
     {
-        // -------- Horizontal input --------
         float move = 0f;
 
         bool left = Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed;
@@ -27,12 +28,20 @@ public class PlayerHorizontalMovement : MonoBehaviour
         if (left)
         {
             move = -1f;
-            spriteRenderer.flipX = true;
+            transform.localScale = new Vector3(
+                -originalScaleX,
+                transform.localScale.y,
+                transform.localScale.z
+            );
         }
         else if (right)
         {
             move = 1f;
-            spriteRenderer.flipX = false;
+            transform.localScale = new Vector3(
+                originalScaleX,
+                transform.localScale.y,
+                transform.localScale.z
+            );
         }
 
         if (Keyboard.current.zKey.isPressed)
@@ -40,13 +49,11 @@ public class PlayerHorizontalMovement : MonoBehaviour
             attacking = true;
         }
 
-        // -------- Apply horizontal movement --------
         rb.linearVelocity = new Vector2(
             move * moveSpeed,
             rb.linearVelocity.y
         );
 
-        // -------- Jump --------
         if (isGrounded && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -54,18 +61,13 @@ public class PlayerHorizontalMovement : MonoBehaviour
         }
     }
 
-    // -------- Ground detection --------
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // basic ground check
         if (collision.contacts[0].normal.y > 0.5f)
         {
             isGrounded = true;
         }
     }
 
-    public bool IsAttacking
-    {
-        get { return attacking; }
-    }
+    public bool IsAttacking => attacking;
 }
