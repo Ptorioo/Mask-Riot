@@ -92,6 +92,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FaceAndHitboxFlip
   playerSprite: {fileID: 797114709403978606}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &8579718008798281128
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +215,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1449564829777187422
 MonoBehaviour:
   m_ObjectHideFlags: 0
