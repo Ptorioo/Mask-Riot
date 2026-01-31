@@ -6,21 +6,27 @@ namespace DefaultNamespace
     public class BackgroundTexture : MonoBehaviour
     {
         private Transform camera;
-        private float     startPos;
+        private float     startPosX;
+        private float     startPosY;
 
         [SerializeField]
-        private float moveSpeed = 3f;
+        private float followSpeedX = 3f;
+        [SerializeField]
+        private float followSpeedY = 3f;
 
         private void Start()
         {
-            camera   = Camera.main.transform;
-            startPos = transform.position.x;
+            camera    = Camera.main.transform;
+            startPosX = transform.position.x;
+            startPosY = transform.position.y;
         }
 
         private void Update()
         {
-            var distance = camera.position.x * moveSpeed;
-            transform.position = new Vector3(startPos + distance , transform.position.y ,
+            var distanceX = camera.position.x * followSpeedX;
+            var distanceY = camera.position.y * followSpeedY;
+            transform.position = new Vector3(startPosX + distanceX ,
+                                             startPosY + distanceY ,
                                              transform.position.z);
         }
     }

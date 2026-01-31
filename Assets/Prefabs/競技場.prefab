@@ -104,7 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3569cd421e4ef699a1e8ff20bc5dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.BackgroundTexture
-  moveSpeed: 0.9
+  followSpeedX: 0.9
+  followSpeedY: 0.5
 --- !u!1 &1557533796676490508
 GameObject:
   m_ObjectHideFlags: 0
