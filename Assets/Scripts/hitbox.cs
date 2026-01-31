@@ -10,6 +10,8 @@ public class HitBox : MonoBehaviour
 
     private float originalOffsetX;
 
+    public PlayerHorizontalMovement playerControl;
+
     void Awake()
     {
         if (!box) box = GetComponent<BoxCollider2D>();
@@ -56,8 +58,12 @@ public class HitBox : MonoBehaviour
             }
 
             var enemy = col.GetComponentInParent<Enemy>();
-            if (enemy != null)
-                Debug.Log(enemy.gameObject.name);
+            if (enemy != null) {
+                if(playerControl != null && playerControl.IsAttacking)
+                    enemy.GetDamage();
+                // Debug.Log(enemy.gameObject.name);
+            }
+                
         }
     }
 }

@@ -9,6 +9,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool isGrounded;
+    private bool attacking;
 
     void Awake()
     {
@@ -34,6 +35,11 @@ public class PlayerHorizontalMovement : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
+        if (Keyboard.current.zKey.isPressed)
+        {
+            attacking = true;
+        }
+
         // -------- Apply horizontal movement --------
         rb.linearVelocity = new Vector2(
             move * moveSpeed,
@@ -56,5 +62,10 @@ public class PlayerHorizontalMovement : MonoBehaviour
         {
             isGrounded = true;
         }
+    }
+
+    public bool IsAttacking
+    {
+        get { return attacking; }
     }
 }
