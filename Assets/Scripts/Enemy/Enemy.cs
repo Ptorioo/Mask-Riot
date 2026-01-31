@@ -1,30 +1,28 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
     private PlayerHorizontalMovement player;
     public Enemystate state;
     public Faction faction;
-
-    public int enemyHp
-    {
-        get => enemyHp;
-        set
-        {
-            if (value < 0)
-                value = 0;
-        }
-    }
+    public int enemyHp;
     public float speed = 0f;
     public float attackValue = 0f;
     public int dir = 1;
     public float distanceRange;
 
+    public SpriteRenderer renderer;
+
     public void Start()
     {
+        enemyHp = 10;
         player = FindAnyObjectByType<PlayerHorizontalMovement>();
+        renderer = GetComponent<SpriteRenderer>();
         state = Enemystate.Move;
+        GetDamage(1);
+        Debug.Log($"現在HP剩餘: {enemyHp}");
     }
     private void FixedUpdate()
     {
@@ -69,19 +67,21 @@ public class Enemy : MonoBehaviour
             state = Enemystate.Move;
         }
     }
-    public void GetDamage(int damage) => GetDamageCorou(damage);
+    public void GetDamage(int damage) => StartCoroutine(GetDamageCorou(damage));
     public IEnumerator GetDamageCorou(int damage)
     {
         enemyHp -= damage;
-
+        Debug.Log($"現在HP剩餘: {enemyHp}");
         if (enemyHp <= 0)
         {
             //死亡邏輯
+            enemyHp = 0;
             yield break;
         }
+        renderer.color = new Color(1, 0, 0, 1);
+        yield return new WaitForSeconds(.1f);
+        renderer.color = new Color(1, 1, 1, 1);
 
-
-        yield return new WaitForSeconds(1f);
         //受到傷害邏輯
 
     }

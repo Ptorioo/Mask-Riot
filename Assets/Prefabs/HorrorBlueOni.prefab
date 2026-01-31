@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 208041521233449872}
   - component: {fileID: 5147961028899955590}
   - component: {fileID: 3421075877965366579}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HorrorBlueOni
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   state: 1
+  faction: 0
+  enemyHp: 10
   speed: 1
   attackValue: 0
   dir: 1
   distanceRange: 2
+  renderer: {fileID: 0}
