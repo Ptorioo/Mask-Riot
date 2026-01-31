@@ -4,15 +4,15 @@ using UnityEngine;
 public class HitBox : MonoBehaviour
 {
     public SpriteRenderer playerSprite;
+    public LayerMask hitMask = ~0;
 
-    public LayerMask hitMask = ~0; // layers to detect (default: everything)
+    public BoxCollider2D box;
 
-    private BoxCollider2D box;
     private float originalOffsetX;
 
     void Awake()
     {
-        box = GetComponent<BoxCollider2D>();
+        if (!box) box = GetComponent<BoxCollider2D>();
         originalOffsetX = box.offset.x;
     }
 
@@ -20,44 +20,44 @@ public class HitBox : MonoBehaviour
     {
         // -------- Flip hitbox horizontally --------
         Vector2 offset = box.offset;
-        offset.x = playerSprite.flipX ? -originalOffsetX : originalOffsetX;
+        offset.x = playerSprite && playerSprite.flipX ? -originalOffsetX : originalOffsetX;
         box.offset = offset;
 
-        // -------- BoxCastAll detection --------
         DetectHits();
     }
 
     void DetectHits()
     {
-        // World-space center of the hitbox
-        Vector2 center = transform.TransformPoint(box.offset);
+        // Make sure triggers can be detected if your enemy colliders are triggers (or your hitbox is a trigger)
+        // (You can also set this in Project Settings > Physics 2D)
+        // Physics2D.queriesHitTriggers = true;
 
-        // World-space size (respect scale)
-        Vector2 size = Vector2.Scale(box.size, transform.lossyScale);
+        // World-space center/size from collider bounds (includes offset + scale)
+        Vector2 center = box.bounds.center;
+        Vector2 size = box.bounds.size;
 
         // Rotation in degrees (2D uses Z)
         float angle = transform.eulerAngles.z;
 
-        // BoxCastAll with zero distance = overlap test
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(
-            center,
-            size,
-            angle,
-            Vector2.zero,
-            0f,
-            hitMask
-        );
+        Collider2D[] cols = Physics2D.OverlapBoxAll(center, size, angle, hitMask);
 
-        foreach (var hit in hits)
+        // Debug.Log($"HitBox hit: {cols.Length}");
+
+        foreach (var col in cols)
         {
-            // Ignore self
-            if (hit.collider == box)
-                continue;
+            if (!col) continue;
 
-            Debug.Log(
-                $"HitBox hit: {hit.collider.name} | " +
-                $"Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}"
-            );
+            if (col == box) continue;
+
+            if (transform.parent != null && col.transform == transform.parent) continue;
+            if (transform.parent != null && col.transform.IsChildOf(transform.parent) && col.GetComponentInParent<Enemy>() == null)
+            {
+                // optional: ignore parent's hierarchy if you really meant "parent area"
+            }
+
+            var enemy = col.GetComponentInParent<Enemy>();
+            if (enemy != null)
+                Debug.Log(enemy.gameObject.name);
         }
     }
 }
