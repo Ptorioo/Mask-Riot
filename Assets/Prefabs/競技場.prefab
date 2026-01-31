@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3705851153191881065}
+  - component: {fileID: 3135572658318288459}
   m_Layer: 0
   m_Name: "\u7AF6\u6280\u5834"
   m_TagString: Untagged
@@ -34,6 +35,23 @@ Transform:
   - {fileID: 5234426384125122560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3135572658318288459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355157156484916424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbae9e66ae5427782e2c6108897ddd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Arena
+  openY: 2
+  closeY: 0.28
+  gates:
+  - {fileID: 6543118713907873281}
+  - {fileID: 5234426384125122560}
 --- !u!1001 &3077564956393380731
 PrefabInstance:
   m_ObjectHideFlags: 0
