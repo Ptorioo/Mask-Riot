@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   state: 1
-  faction: 0
+  faction: 1
   enemyHp: 2
   speed: 1
   attackValue: 0
