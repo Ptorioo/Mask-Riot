@@ -79,7 +79,6 @@ public class Enemy : MonoBehaviour
         Debug.Log($"left HP: {enemyHp}");
         if (enemyHp <= 0)
         {
-            //¦º¤`ÅÞ¿è
             enemyHp = 0;
             state = Enemystate.Dying;
             return;
