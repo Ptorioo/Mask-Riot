@@ -35,15 +35,15 @@ public class PlayerHorizontalMovement : MonoBehaviour
         }
 
         // -------- Apply horizontal movement --------
-        rb.velocity = new Vector2(
+        rb.linearVelocity = new Vector2(
             move * moveSpeed,
-            rb.velocity.y
+            rb.linearVelocity.y
         );
 
         // -------- Jump --------
         if (isGrounded && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
         }
     }
