@@ -66,7 +66,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.08690053, y: 0.019104868}
+  m_Offset: {x: -0.16862419, y: -0.16817859}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -76,7 +76,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.82619894, y: 1.3842871}
+  m_Size: {x: 0.98964626, y: 0.43765467}
   m_EdgeRadius: 0
 --- !u!1 &5278089705342564016
 GameObject:
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -3117961255060482634, guid: 48e3f0d2d3f26774e90644c0f7c47fe1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -188,15 +188,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   player: {fileID: 0}
-  state: 1
-  faction: 3
-  initHp: 10
-  speed: 1
-  attackValue: 0
-  dir: 1
-  distanceRange: 2
   maskObj: {fileID: 2292938439020157633}
+  body: {fileID: 5147961028899955590}
   col2D: {fileID: 914981102259543576}
+  fac: 3
+  speed: 1
+  attackValue: 1
+  distanceRange: 2
+  cooldown: 2
+  initHp: 10
   healthBar: {fileID: 5442492144964434985}
   hp: 0
   atkAnim: {fileID: 8069543764099650813}
@@ -243,7 +243,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

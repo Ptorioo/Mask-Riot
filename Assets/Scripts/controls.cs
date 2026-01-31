@@ -1,10 +1,14 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerHorizontalMovement : MonoBehaviour
 {
     public float moveSpeed = 6f;
     public float jumpForce = 7f;
+    public int initHp = 10;
+    public int hp;
 
     [Header("Attack")]
     [SerializeField] private float attackCooldown = 1f;
@@ -16,11 +20,13 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private float originalScaleX;
 
     [SerializeField] private Animator _animator;
-
+    [SerializeField] private HealthBar healthBar;
+    public Faction faction = Faction.PlayerCharacter;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         originalScaleX = Mathf.Abs(transform.localScale.x);
+        hp = initHp;
     }
 
     void Update()
@@ -77,4 +83,27 @@ public class PlayerHorizontalMovement : MonoBehaviour
     }
 
     public bool IsAttacking => attacking;
+
+    public void GetDamage(int damageValue)
+    {
+        hp -= damageValue; //damage
+        healthBar.UpdateHealthBar(hp, initHp);
+        Debug.Log($"left HP: {hp}");
+        if (hp <= 0)
+        {
+            hp = 0;
+            //Gameover logic
+            return;
+        }
+
+        StartCoroutine(DamageEffect());
+    }
+
+    private IEnumerator DamageEffect()
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = new Color(1, 0, 0, 1);
+        yield return new WaitForSeconds(.2f);
+        renderer.color = new Color(1, 1, 1, 1);
+    }
 }
