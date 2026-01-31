@@ -253,4 +253,4 @@ MonoBehaviour:
   speed: 1
   attackValue: 0
   dir: 1
-  distanceRange: 0
+  distanceRange: 2
