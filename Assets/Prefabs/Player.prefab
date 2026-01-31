@@ -80,7 +80,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7127193123590645955, guid: 7609ebf1234766d4a8695cf72ba4f937, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -226,7 +226,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 6200000, guid: 18b44637be324f34db1b4fb992ff2993, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHorizontalMovement
   moveSpeed: 5
   jumpForce: 7
+  attackCooldown: 0.5
   _animator: {fileID: 9023175823110753452}
 --- !u!61 &6290094267201599797
 BoxCollider2D:
@@ -287,7 +288,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.52746356, y: -0.09618896}
+  m_Offset: {x: 0.51463807, y: -0.09618896}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -297,7 +298,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.62841916, y: 0.48723507}
+  m_Size: {x: 0.60276806, y: 0.48723507}
   m_EdgeRadius: 0
 --- !u!61 &7377077800982678649
 BoxCollider2D:
