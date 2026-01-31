@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 6290094267201599797}
   - component: {fileID: 7377077800982678649}
   - component: {fileID: 6286204014286344066}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 18b44637be324f34db1b4fb992ff2993, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -250,7 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe11801ed27cbe47b749aad4247f702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHorizontalMovement
-  spriteRenderer: {fileID: 797114709403978606}
   moveSpeed: 5
   jumpForce: 7
 --- !u!61 &6290094267201599797
@@ -357,7 +356,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f9a91c35068642aad397820382162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitBox
-  playerSprite: {fileID: 797114709403978606}
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295
