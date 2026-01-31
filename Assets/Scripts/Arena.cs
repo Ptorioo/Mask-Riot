@@ -60,4 +60,19 @@ public class Arena : MonoBehaviour
             wall.size    = newSize;
         }
     }
+
+    public void QuickCloseGate()
+    {
+        foreach (var gate in gates)
+        {
+            gate.DOLocalMoveY(closeY , 0f);
+        }
+
+        foreach (var wall in walls)
+        {
+            var newSize = wall.size;
+            newSize.y = closeWallColliderSize;
+            wall.size = newSize;
+        } 
+    }
 }

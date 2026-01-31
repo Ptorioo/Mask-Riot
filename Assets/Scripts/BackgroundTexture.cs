@@ -21,6 +21,7 @@ namespace DefaultNamespace
             startPosY = transform.position.y;
         }
 
+
         private void Update()
         {
             var distanceX = camera.position.x * followSpeedX;
@@ -28,6 +29,14 @@ namespace DefaultNamespace
             transform.position = new Vector3(startPosX + distanceX ,
                                              startPosY + distanceY ,
                                              transform.position.z);
+        }
+
+        public void ForceReset()
+        {
+            var newPosition  = transform.position;
+            var positionX = newPosition.x;
+            newPosition.x         = 0 - Mathf.Abs(positionX);
+            transform.position = newPosition;
         }
     }
 }
