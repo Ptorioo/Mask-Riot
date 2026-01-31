@@ -44,20 +44,18 @@ public class PlayerHorizontalMovement : MonoBehaviour
             attacking = true;
             _animator.SetTrigger("Attack");
         }
+        else
+        {
+            attacking = false;
+        }
 
-        rb.linearVelocity = new Vector2(move * moveSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(move * moveSpeed, rb.linearVelocity.y);
 
         if (isGrounded && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
         }
-    }
-
-    // Called by an Animation Event at the end of the attack clip
-    public void EndAttack()
-    {
-        attacking = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
