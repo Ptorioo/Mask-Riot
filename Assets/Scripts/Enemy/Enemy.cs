@@ -1,10 +1,21 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     private PlayerHorizontalMovement player;
     public Enemystate state;
-    //public AttackArea;
+    public Faction faction;
+
+    public int enemyHp
+    {
+        get => enemyHp;
+        set
+        {
+            if (value < 0)
+                value = 0;
+        }
+    }
     public float speed = 0f;
     public float attackValue = 0f;
     public int dir = 1;
@@ -32,6 +43,9 @@ public class Enemy : MonoBehaviour
             case Enemystate.Move:
                 Move(distanceRange);
                 break;
+            case Enemystate.gettingDmg:
+
+                break;
         }
     }
     private void Move(float distanceRange)
@@ -55,10 +69,27 @@ public class Enemy : MonoBehaviour
             state = Enemystate.Move;
         }
     }
+    public void GetDamage(int damage) => GetDamageCorou(damage);
+    public IEnumerator GetDamageCorou(int damage)
+    {
+        enemyHp -= damage;
+
+        if (enemyHp <= 0)
+        {
+            //¦º¤`ÅÞ¿è
+            yield break;
+        }
+
+
+        yield return new WaitForSeconds(1f);
+        //¨ü¨ì¶Ë®`ÅÞ¿è
+
+    }
     public enum Enemystate
     {
         Rise,
         Move,
         Attack,
+        gettingDmg,
     }
 }
