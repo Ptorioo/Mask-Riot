@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,15 +17,13 @@ public class Enemy : MonoBehaviour
     public GameObject maskObj;
 
     public SpriteRenderer renderer;
-
+    private bool isActive;
     public void Start()
     {
-        enemyHp = 10;
+        isActive = true;
         player = FindAnyObjectByType<PlayerHorizontalMovement>();
         renderer = GetComponent<SpriteRenderer>();
         state = Enemystate.Move;
-        GetDamage();
-        Debug.Log($"現在HP剩餘: {enemyHp}");
     }
     private void FixedUpdate()
     {
@@ -32,20 +31,26 @@ public class Enemy : MonoBehaviour
     }
     public void Statement()
     {
-        switch (state)
+        if (isActive)
         {
-            case Enemystate.Rise:
-                //鑽出動畫
-                break;
-            case Enemystate.Attack:
-                Attack();
-                break;
-            case Enemystate.Move:
-                Move(distanceRange);
-                break;
-            case Enemystate.gettingDmg:
+            switch (state)
+            {
+                case Enemystate.Rise:
+                    //鑽出動畫
+                    break;
+                case Enemystate.Attack:
+                    Attack();
+                    break;
+                case Enemystate.Move:
+                    Move(distanceRange);
+                    break;
+                case Enemystate.gettingDmg:
 
-                break;
+                    break;
+                case Enemystate.Dying:
+                    Die();
+                    break;
+            }
         }
     }
     private void Move(float distanceRange)
@@ -69,31 +74,37 @@ public class Enemy : MonoBehaviour
             state = Enemystate.Move;
         }
     }
-    [ContextMenu("扣血")]
-    public void GetDamage() => StartCoroutine(GetDamageCorou());
-    public IEnumerator GetDamageCorou()
+    public void GetDamage(int damageValue)
     {
-        enemyHp -= 1; //damage
+        enemyHp -= damageValue; //damage
         Debug.Log($"現在HP剩餘: {enemyHp}");
         if (enemyHp <= 0)
         {
             //死亡邏輯
             enemyHp = 0;
-            Die();
-            yield break;
+            state = Enemystate.Dying;
+            return;
         }
-        renderer.color = new Color(1, 0, 0, 1);
-        yield return new WaitForSeconds(.1f);
-        renderer.color = new Color(1, 1, 1, 1);
-
-        //受到傷害邏輯
+        StartCoroutine(DamageEffect());
     }
-    [ContextMenu("死")]
+
+    private IEnumerator DamageEffect()
+    {
+        renderer.color = new Color(1, 0, 0, 1);
+        yield return new WaitForSeconds(.2f);
+        renderer.color = new Color(1, 1, 1, 1);
+    }
     public void Die()
     {
+        isActive = false;
         GameObject tempMask = Instantiate(maskObj, transform.position, Quaternion.identity);
         tempMask.transform.SetParent(null);
-        Destroy(gameObject);
+        
+        renderer.DOColor(new Color(1, 1, 1, 0), 3f).OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
+        transform.DOLocalRotateQuaternion(new Quaternion(0f, 0f, -90f, 0f), 1f);
     }
     public enum Enemystate
     {
@@ -101,5 +112,6 @@ public class Enemy : MonoBehaviour
         Move,
         Attack,
         gettingDmg,
+        Dying,
     }
 }
