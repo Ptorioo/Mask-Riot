@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour
         isActive = false;
         GameObject tempMask = Instantiate(maskObj , transform.position , Quaternion.identity);
         tempMask.transform.SetParent(null);
-
+        tempMask.SetActive(true);
         healthBar.gameObject.SetActive(false);
         renderer.DOColor(new Color(1 , 1 , 1 , 0) , 3f)
                 .OnComplete(() =>
