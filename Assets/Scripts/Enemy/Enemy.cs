@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
         player = FindAnyObjectByType<PlayerHorizontalMovement>();
         renderer = GetComponent<SpriteRenderer>();
         state = Enemystate.Move;
-        GetDamage(1);
+        GetDamage();
         Debug.Log($"現在HP剩餘: {enemyHp}");
     }
     private void FixedUpdate()
@@ -67,15 +67,17 @@ public class Enemy : MonoBehaviour
             state = Enemystate.Move;
         }
     }
-    public void GetDamage(int damage) => StartCoroutine(GetDamageCorou(damage));
-    public IEnumerator GetDamageCorou(int damage)
+    [ContextMenu("扣血")]
+    public void GetDamage() => StartCoroutine(GetDamageCorou());
+    public IEnumerator GetDamageCorou()
     {
-        enemyHp -= damage;
+        enemyHp -= 1; //damage
         Debug.Log($"現在HP剩餘: {enemyHp}");
         if (enemyHp <= 0)
         {
             //死亡邏輯
             enemyHp = 0;
+            Die();
             yield break;
         }
         renderer.color = new Color(1, 0, 0, 1);
@@ -83,7 +85,11 @@ public class Enemy : MonoBehaviour
         renderer.color = new Color(1, 1, 1, 1);
 
         //受到傷害邏輯
-
+    }
+    [ContextMenu("死")]
+    public void Die()
+    {
+        Destroy(gameObject);
     }
     public enum Enemystate
     {
