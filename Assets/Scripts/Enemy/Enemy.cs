@@ -6,6 +6,7 @@ using DG.Tweening;
 public class Enemy : MonoBehaviour
 {
     private PlayerHorizontalMovement player;
+    private SpriteRenderer renderer;
     public Enemystate state;
     public Faction faction;
     public int enemyHp;
@@ -13,10 +14,7 @@ public class Enemy : MonoBehaviour
     public float attackValue = 0f;
     public int dir = 1;
     public float distanceRange;
-
     public GameObject maskObj;
-
-    public SpriteRenderer renderer;
     private bool isActive;
     public void Start()
     {
