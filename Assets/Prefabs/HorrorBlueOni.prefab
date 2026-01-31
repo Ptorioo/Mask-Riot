@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6f415f66eacbb4eb82b5652d7061b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  player: {fileID: 0}
   state: 1
   faction: 1
   initHp: 2
@@ -195,6 +196,7 @@ MonoBehaviour:
   dir: 1
   distanceRange: 2
   maskObj: {fileID: 7898103584818337541}
+  col2D: {fileID: 914981102259543576}
   healthBar: {fileID: 8435849486860665304}
   hp: 0
 --- !u!50 &208041521233449872
@@ -269,6 +271,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7133666864937431974}
     m_Modifications:
+    - target: {fileID: 2262022677103590336, guid: 40fc7041c7ed3ad4b82d2771089daca5, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6123289073981246559, guid: 40fc7041c7ed3ad4b82d2771089daca5, type: 3}
       propertyPath: m_Name
       value: HealthBar
