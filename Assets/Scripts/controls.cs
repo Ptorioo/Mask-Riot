@@ -5,10 +5,10 @@ using System.Collections;
 
 public class PlayerHorizontalMovement : MonoBehaviour
 {
-    public float moveSpeed = 6f;
-    public float jumpForce = 7f;
-    public int initHp = 10;
-    public int hp;
+    private float moveSpeed = 12f;
+    private float jumpForce = 15f;
+    private int initHp = 10;
+    private int hp;
 
     [Header("Attack")]
     [SerializeField] private float attackCooldown = 1f;
