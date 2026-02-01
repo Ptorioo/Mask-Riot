@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class Enemy : MonoBehaviour
 {
     private PlayerHorizontalMovement player;
+    private GameObject target;
     private SpriteRenderer renderer;
     [SerializeField] private GameObject maskObj;
     [SerializeField] private Collider2D body;
@@ -44,6 +45,7 @@ public class Enemy : MonoBehaviour
     {
         hp = initHp;
         isActive = true;
+        InitTargetPLayer();
         player = FindAnyObjectByType<PlayerHorizontalMovement>();
         renderer = GetComponent<SpriteRenderer>();
         state = Enemystate.Move;
@@ -83,13 +85,14 @@ public class Enemy : MonoBehaviour
 
     private void Move(float distanceRange)
     {
-        bool LR = player.transform.position.x < transform.position.x;
+        Transform target = ScanForEnemies();
+        bool LR = target.position.x < transform.position.x;
         dir = LR ? -1 : 1;
         int scale = 2;
         transform.localScale = new Vector3(dir*scale, scale, 1);
 
         transform.Translate(new Vector3(speed * dir * Time.fixedDeltaTime, 0, 0));
-        float dist = Vector3.Distance(player.transform.position, transform.position);
+        float dist = Vector3.Distance(target.position, transform.position);
         if (dist < distanceRange)
         {
             state = Enemystate.Attack;
@@ -98,9 +101,10 @@ public class Enemy : MonoBehaviour
 
     public void Attack()
     {
+        Transform target = ScanForEnemies();
         AnimatorStateInfo tempClipInfo = atkAnim.GetCurrentAnimatorStateInfo(0);
         float totalANimTime = tempClipInfo.length;
-        float dist = Vector3.Distance(player.transform.position, transform.position);
+        float dist = Vector3.Distance(target.transform.position, transform.position);
         Debug.Log(totalANimTime);
 
         if (dist >= distanceRange)
@@ -244,5 +248,34 @@ public class Enemy : MonoBehaviour
             }
 
         }
+    }
+    /// <summary>
+    /// When player change mask, Scan the area
+    /// </summary>
+    /// <returns></returns>
+    public Transform ScanForEnemies()
+    {
+        // 假設使用 Physics.OverlapSphere 獲取周圍物件
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 100f);
+        foreach (var col in colliders)
+        {
+            if (col.TryGetComponent<Transform>(out var other) && other != this)
+            {
+                if(other.TryGetComponent<PlayerHorizontalMovement>(out var play))
+                {
+                    if(play.faction != fac)
+                    {
+                        Debug.Log(other.name);
+                        return play.transform;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    public void InitTargetPLayer()
+    {
+        if (target == null)
+            target = GameObject.Find("Player");
     }
 }
