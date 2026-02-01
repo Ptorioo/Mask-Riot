@@ -1,5 +1,6 @@
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TransitionManager : MonoBehaviour
 {
@@ -52,6 +53,12 @@ public class TransitionManager : MonoBehaviour
         var playerX = player.transform.position.x;
         if (playerX >= 21.7f)
         {
+            if (FindFirstObjectByType<GameManager>().IsLastLevel())
+            {
+                SceneManager.LoadScene(0);
+                return;
+            }
+
             transitionStarted = true;
             arena.QuickCloseGate();
             tran_Center.FadeIn(fadeDuration);

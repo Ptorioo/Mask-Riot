@@ -23,9 +23,11 @@ public class GameManager : MonoBehaviour
     {
         switch (levelIndex)
         {
-            case 0 : enemySpawners.StartSpawnFirstLevelEnemies(levelEnemiesCount[levelIndex]);
+            case 0 :
+                enemySpawners.StartSpawnFirstLevelEnemies(levelEnemiesCount[levelIndex]);
                 break;
-            case 1 : enemySpawners.StartSpawnAllEnemies(levelEnemiesCount[levelIndex]);
+            case 1 :
+                enemySpawners.StartSpawnAllEnemies(levelEnemiesCount[levelIndex]);
                 break;
         }
 
@@ -43,9 +45,9 @@ public class GameManager : MonoBehaviour
             // game clear
             if (currentLevelIndex >= levelEnemiesCount.Count)
             {
-                SceneManager.LoadScene(0);
                 return;
             }
+
             SpawnLevelEnemies(currentLevelIndex);
         }
     }
@@ -53,5 +55,10 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         Enemy.DieEventHandler -= EnemyDieEventHandler;
+    }
+
+    public bool IsLastLevel()
+    {
+        return currentLevelIndex >= levelEnemiesCount.Count;
     }
 }
