@@ -81,7 +81,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7127193123590645955, guid: 7609ebf1234766d4a8695cf72ba4f937, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -200,7 +200,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7473920403424214205, guid: 7ebeba75b306e9c49b6aea9d99ea86e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -227,6 +227,7 @@ MonoBehaviour:
   maskObj: {fileID: 7898103584818337541}
   body: {fileID: 5147961028899955590}
   col2D: {fileID: 2883275276334457465}
+  modelScale: 2
   fac: 1
   speed: 0.5
   attackValue: 1
