@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnLevelEnemies(int levelIndex)
     {
+        enemyToKillCountForLevel = levelEnemiesCount[levelIndex];
         switch (levelIndex)
         {
             case 0 :
@@ -33,7 +34,6 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        enemyToKillCountForLevel = levelEnemiesCount[levelIndex];
     }
 
     private void EnemyDieEventHandler(object sender , EventArgs e)
