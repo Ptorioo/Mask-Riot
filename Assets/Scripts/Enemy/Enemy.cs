@@ -60,8 +60,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int attackValue = 0;
 
-    [SerializeField]
-    private float distanceRange;
+    private float distanceRange = 3.5f;
 
     [SerializeField]
     private float cooldown = 1f;
@@ -341,7 +340,7 @@ public class Enemy : MonoBehaviour
 
         transform.Translate(new Vector3(speed * dir * Time.fixedDeltaTime , 0 , 0));
         float dist = Vector3.Distance(targetTransform.position , transform.position);
-        if (dist < distanceRange)
+        if (dist <= distanceRange)
         {
             state = Enemystate.Attack;
         }
