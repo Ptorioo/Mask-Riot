@@ -53,11 +53,11 @@ public class TransitionManager : MonoBehaviour
         var playerX = player.transform.position.x;
         if (playerX >= 21.7f)
         {
-            if (FindFirstObjectByType<GameManager>().IsLastLevel())
-            {
-                SceneManager.LoadScene(0);
-                return;
-            }
+            // if (FindFirstObjectByType<GameManager>().IsLastLevel())
+            // {
+            //     SceneManager.LoadScene(0);
+            //     return;
+            // }
 
             transitionStarted = true;
             arena.QuickCloseGate();

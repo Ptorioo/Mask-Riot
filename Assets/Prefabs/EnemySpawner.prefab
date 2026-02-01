@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb9aa539bc14168a99517e816f7cc7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.MonsterSpawner
-  enemyPrefab: {fileID: 5278089705342564016, guid: d72e140ae58dbff4fa5896d05354a70f, type: 3}
+  enemyPrefab:
+  - {fileID: 5278089705342564016, guid: d72e140ae58dbff4fa5896d05354a70f, type: 3}
+  - {fileID: 5278089705342564016, guid: 264eb54c598c2054f8e883fb8567f476, type: 3}
+  - {fileID: 5278089705342564016, guid: 31aad43fd1da29248b23f0d4c3194c69, type: 3}
   minX: -20.16
   maX: 18.98

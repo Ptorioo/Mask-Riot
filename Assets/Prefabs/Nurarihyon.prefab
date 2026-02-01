@@ -190,6 +190,7 @@ MonoBehaviour:
   maskObj: {fileID: 2292938439020157633}
   body: {fileID: 5147961028899955590}
   col2D: {fileID: 914981102259543576}
+  modelScale: 2
   fac: 3
   speed: 2
   attackValue: 2
@@ -503,10 +504,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7133666864937431974}
     m_Modifications:
+    - target: {fileID: 345742928812708105, guid: 16d48d2d36deca54e89968ca8a8818e5, type: 3}
+      propertyPath: faction
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2608425462667970296, guid: 16d48d2d36deca54e89968ca8a8818e5, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -6943834320350533100, guid: d19dc8dbc29bdcc4eba330f20f3f963a, type: 3}
+    - target: {fileID: 2749171948941364429, guid: 16d48d2d36deca54e89968ca8a8818e5, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749171948941364429, guid: 16d48d2d36deca54e89968ca8a8818e5, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.86
+      objectReference: {fileID: 0}
     - target: {fileID: 5571846492310333616, guid: 16d48d2d36deca54e89968ca8a8818e5, type: 3}
       propertyPath: m_Size.x
       value: 0.840786

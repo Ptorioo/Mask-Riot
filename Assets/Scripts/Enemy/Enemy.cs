@@ -1,11 +1,9 @@
-using System;
 using DefaultNamespace;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
-using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,6 +13,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject maskObj;
     [SerializeField] private Collider2D body;
     [SerializeField] private Collider2D col2D;
+
+    [SerializeField] private float modelScale = 2f;
 
     public Faction faction => faction;
     [SerializeField] private Faction fac;
@@ -44,16 +44,47 @@ public class Enemy : MonoBehaviour
         gettingDmg,
         Dying,
     }
-    public void Start()
+public void Start()
     {
         hp = initHp;
         isActive = true;
         InitTargetPLayer();
         player = FindAnyObjectByType<PlayerHorizontalMovement>();
-        renderer = GetComponent<SpriteRenderer>();
+        
+        // REVERTED: Back to 'renderer' (ignores the warning)
+        renderer = GetComponent<SpriteRenderer>(); 
+        
         state = Enemystate.Move;
+        
         float tall = Random.Range(0, 16);
         body.offset = new Vector2(0, tall / 100f);
+
+        // FIX: Set size immediately using the new variable
+        transform.localScale = new Vector3(modelScale, modelScale, 1f);
+    }
+
+    private void Move(float distanceRange)
+    {
+        Transform targetTransform = ScanForEnemies();
+
+        // FIX: If no target found, STOP. Don't run the next lines.
+        if (targetTransform == null) 
+        {
+            return; 
+        }
+
+        bool LR = targetTransform.position.x < transform.position.x;
+        dir = LR ? -1 : 1;
+        
+        // FIX: Use modelScale variable here
+        transform.localScale = new Vector3(dir * modelScale, modelScale, 1);
+
+        transform.Translate(new Vector3(speed * dir * Time.fixedDeltaTime, 0, 0));
+        float dist = Vector3.Distance(targetTransform.position, transform.position);
+        if (dist < distanceRange)
+        {
+            state = Enemystate.Attack;
+        }
     }
 
     private void FixedUpdate()
@@ -85,23 +116,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
-    private void Move(float distanceRange)
-    {
-        Transform target = ScanForEnemies();
-        bool LR = target.position.x < transform.position.x;
-        dir = LR ? -1 : 1;
-        int scale = 2;
-        transform.localScale = new Vector3(dir*scale, scale, 1);
-
-        transform.Translate(new Vector3(speed * dir * Time.fixedDeltaTime, 0, 0));
-        float dist = Vector3.Distance(target.position, transform.position);
-        if (dist < distanceRange)
-        {
-            state = Enemystate.Attack;
-        }
-    }
-
     public void Attack()
     {
         Transform target = ScanForEnemies();
@@ -154,6 +168,8 @@ public class Enemy : MonoBehaviour
         StartCoroutine(DamageEffect());
     }
 
+    public static event EventHandler<EventArgs> DieEventHandler;
+
     private IEnumerator DamageEffect()
     {
         renderer.color = new Color(1, 0, 0, 1);
@@ -164,6 +180,7 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         isActive = false;
+
         DieEventHandler.Invoke(this,EventArgs.Empty);
 
         // --- mask logic unchanged ---
@@ -233,7 +250,7 @@ public class Enemy : MonoBehaviour
             string tempStr = "obj: ";
             for (int i = 0; i < count; i++)
             {
-                Debug.Log("������G" + results[i].gameObject.name);
+                Debug.Log("      G" + results[i].gameObject.name);
                 PlayerHorizontalMovement playerr = null;
                 Enemy enemy = null;
                 if (results[i].gameObject.TryGetComponent<PlayerHorizontalMovement>(out playerr)
@@ -241,14 +258,14 @@ public class Enemy : MonoBehaviour
                 {
                     if (playerr != null)
                     {
-                        Debug.Log("������G" + playerr.gameObject.name);
+                        Debug.Log("      G" + playerr.gameObject.name);
                         tempStr += $"{playerr.gameObject.name},";
                         if (playerr.faction != fac)
                             playerr.GetDamage(attackValue);
                     }
                     if (enemy != null)
                     {
-                        Debug.Log("������ĤH���ĤH�G" + enemy.gameObject.name);
+                        Debug.Log("      ĤH   ĤH G" + enemy.gameObject.name);
                         if (enemy.fac != fac)
                             enemy.GetDamage(attackValue);
                     }
@@ -312,6 +329,4 @@ public class Enemy : MonoBehaviour
         if (target == null)
             target = GameObject.Find("Player");
     }
-
-    public static event EventHandler<EventArgs> DieEventHandler;
 }
