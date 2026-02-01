@@ -271,10 +271,10 @@ MonoBehaviour:
   col2D: {fileID: 9154400349565889140}
   fac: 2
   speed: 1
-  attackValue: 1
+  attackValue: 3
   distanceRange: 2
-  cooldown: 1
-  initHp: 10
+  cooldown: 5
+  initHp: 5
   healthBar: {fileID: 6120860705082137488}
   hp: 0
   atkAnim: {fileID: 7178704295945393265}
