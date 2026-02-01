@@ -85,7 +85,8 @@ public class Enemy : MonoBehaviour
     {
         bool LR = player.transform.position.x < transform.position.x;
         dir = LR ? -1 : 1;
-        transform.localScale = new Vector3(dir, 1, 1);
+        int scale = 2;
+        transform.localScale = new Vector3(dir*scale, scale, 1);
 
         transform.Translate(new Vector3(speed * dir * Time.fixedDeltaTime, 0, 0));
         float dist = Vector3.Distance(player.transform.position, transform.position);
@@ -194,7 +195,7 @@ public class Enemy : MonoBehaviour
             string tempStr = "obj: ";
             for (int i = 0; i < count; i++)
             {
-                Debug.Log("°»´ú¨ì¡G" + results[i].gameObject.name);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½G" + results[i].gameObject.name);
                 PlayerHorizontalMovement playerr = null;
                 Enemy enemy = null;
                 if (results[i].gameObject.TryGetComponent<PlayerHorizontalMovement>(out playerr)
@@ -202,14 +203,14 @@ public class Enemy : MonoBehaviour
                 {
                     if (playerr != null)
                     {
-                        Debug.Log("°»´ú¨ì¡G" + playerr.gameObject.name);
+                        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½G" + playerr.gameObject.name);
                         tempStr += $"{playerr.gameObject.name},";
                         if (playerr.faction != fac)
                             playerr.GetDamage(attackValue);
                     }
                     if (enemy != null)
                     {
-                        Debug.Log("°»´ú¨ì¼Ä¤Hªº¼Ä¤H¡G" + enemy.gameObject.name);
+                        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¤Hï¿½ï¿½ï¿½Ä¤Hï¿½G" + enemy.gameObject.name);
                         if (enemy.fac != fac)
                             enemy.GetDamage(attackValue);
                     }
