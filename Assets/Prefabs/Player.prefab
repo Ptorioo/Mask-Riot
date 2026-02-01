@@ -357,7 +357,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1667913109096744779, guid: b134e4e34c0d5ad40988d3c944922f4a, type: 3}
+  m_Sprite: {fileID: 7545664159256303283, guid: 2f057125b8f20624b95182fd6213d0d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -406,12 +406,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe11801ed27cbe47b749aad4247f702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHorizontalMovement
-  currentFaction: 0
+  faction: 0
   attackCooldown: 0.5
   _animator: {fileID: 9023175823110753452}
   healthBar: {fileID: 6652713729947298261}
   maskLayer: {fileID: 8111065708807740484}
-  faction: 0
 --- !u!61 &7377077800982678649
 BoxCollider2D:
   m_ObjectHideFlags: 0

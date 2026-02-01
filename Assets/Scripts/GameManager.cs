@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private List<int>    levelEnemiesCount = new List<int>() { 5 , 10, 15 };
+    private List<int>    levelEnemiesCount = new List<int>() { 5 , 10, 9999 };
     private int          currentLevelIndex = 0;
     private int          enemyToKillCountForLevel;
     private Arena        arena;
