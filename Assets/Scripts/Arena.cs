@@ -1,16 +1,18 @@
-using System;
+#region
+
 using DG.Tweening;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+#endregion
+
 public class Arena : MonoBehaviour
 {
-    [SerializeField]
-    private float openY = 5;
+#region Private Variables
 
-    [SerializeField]
-    private float closeY = -0.85f;
+    private readonly float openYo = 5;
+
+    private readonly float closeY = -0.85f;
 
     [SerializeField]
     private BoxCollider2D[] walls;
@@ -24,10 +26,18 @@ public class Arena : MonoBehaviour
     [SerializeField]
     private float closeWallColliderSize;
 
+#endregion
+
+#region Unity events
+
     private void Awake()
     {
         Assert.IsTrue(gates.Length > 0 , "error , no gate in array.");
     }
+
+#endregion
+
+#region Public Methods
 
     [ContextMenu("關門")]
     public void CloseGate()
@@ -39,9 +49,9 @@ public class Arena : MonoBehaviour
 
         foreach (var wall in walls)
         {
-            var newSize   = wall.size;
+            var newSize = wall.size;
             newSize.y = closeWallColliderSize;
-            wall.size    = newSize;
+            wall.size = newSize;
         }
     }
 
@@ -50,14 +60,14 @@ public class Arena : MonoBehaviour
     {
         foreach (var gate in gates)
         {
-            gate.DOLocalMoveY(openY , 1);
+            gate.DOLocalMoveY(openYo , 1);
         }
 
         foreach (var wall in walls)
         {
-            var newSize   = wall.size;
+            var newSize = wall.size;
             newSize.y = openWallColliderSize;
-            wall.size    = newSize;
+            wall.size = newSize;
         }
     }
 
@@ -73,6 +83,8 @@ public class Arena : MonoBehaviour
             var newSize = wall.size;
             newSize.y = closeWallColliderSize;
             wall.size = newSize;
-        } 
+        }
     }
+
+#endregion
 }
