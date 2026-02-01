@@ -1,9 +1,11 @@
+using System;
 using DefaultNamespace;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -162,6 +164,7 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         isActive = false;
+        DieEventHandler.Invoke(this,EventArgs.Empty);
 
         // --- mask logic unchanged ---
         GameObject tempMask = maskObj;
@@ -309,4 +312,6 @@ public class Enemy : MonoBehaviour
         if (target == null)
             target = GameObject.Find("Player");
     }
+
+    public static event EventHandler<EventArgs> DieEventHandler;
 }
