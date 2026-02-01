@@ -230,7 +230,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         {
             hp = 0;
 
-            // Die();
+            Die();
 
             return;
         }
