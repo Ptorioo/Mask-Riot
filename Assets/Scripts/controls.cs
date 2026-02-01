@@ -2,6 +2,8 @@ using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using DG.Tweening;
+using System.Collections.Generic;
 
 public class PlayerHorizontalMovement : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private float jumpForce = 15f;
     private int initHp = 10;
     private int hp;
+    private bool isDead = false;
 
     [Header("Attack")]
     [SerializeField] private float attackCooldown = 1f;
@@ -31,6 +34,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
         // -------- Horizontal movement --------
         float move = 0f;
 
@@ -92,7 +96,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
         if (hp <= 0)
         {
             hp = 0;
-            //Gameover logic
+            Die(); //Gameover logic
+
             return;
         }
 
@@ -105,5 +110,46 @@ public class PlayerHorizontalMovement : MonoBehaviour
         renderer.color = new Color(1, 0, 0, 1);
         yield return new WaitForSeconds(.2f);
         renderer.color = new Color(1, 1, 1, 1);
+    }
+
+    public void Die()
+    {
+        // --- mask logic unchanged ---
+        // GameObject tempMask = maskObj;
+        // tempMask.SetActive(true);
+        // tempMask.transform.SetParent(null, true);      // keep world transform
+        // tempMask.transform.position = transform.position; // use world position
+        // tempMask.transform.localScale = new Vector3(2f, 2f, 1f);
+
+        if (isDead) return;
+
+        isDead = true;
+        healthBar.gameObject.SetActive(false);
+
+        // --- fade only this object + Atk subtree ---
+        List<SpriteRenderer> fadeTargets = new List<SpriteRenderer>();
+
+        // 1. this object's renderer (if any)
+        if (TryGetComponent<SpriteRenderer>(out var selfRenderer))
+            fadeTargets.Add(selfRenderer);
+
+        // 2. Atk and its children
+        Transform atk = transform.Find("Blade");
+        if (atk != null)
+        {
+            fadeTargets.AddRange(atk.GetComponentsInChildren<SpriteRenderer>());
+        }
+
+        // fade
+        foreach (var r in fadeTargets)
+        {
+            r.DOColor(
+                new Color(r.color.r, r.color.g, r.color.b, 0f),
+                3f
+            );
+        }
+
+        // rotation
+        transform.DOLocalRotate(new Vector3(0, 0, -90f), 1f);
     }
 }
