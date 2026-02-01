@@ -7,10 +7,10 @@ using UnityEngine.Assertions;
 public class Arena : MonoBehaviour
 {
     [SerializeField]
-    private float openY;
+    private float openY = 5;
 
     [SerializeField]
-    private float closeY;
+    private float closeY = -0.85f;
 
     [SerializeField]
     private BoxCollider2D[] walls;
