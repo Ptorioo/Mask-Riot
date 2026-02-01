@@ -134,7 +134,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
         // -------- Attack with cooldown --------
 
-        if (Keyboard.current.zKey.wasPressedThisFrame && Time.time >= nextAttackTime)
+        if (Keyboard.current.cKey.wasPressedThisFrame && Time.time >= nextAttackTime)
 
         {
             attacking = true;
@@ -157,13 +157,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     public void Die()
     {
-        // --- mask logic unchanged ---
-        // GameObject tempMask = maskObj;
-        // tempMask.SetActive(true);
-        // tempMask.transform.SetParent(null, true);      // keep world transform
-        // tempMask.transform.position = transform.position; // use world position
-        // tempMask.transform.localScale = new Vector3(2f, 2f, 1f);
-
         if (isDead) return;
 
         isDead = true;
@@ -222,8 +215,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
         hp -= damageValue; //damage
 
         healthBar.UpdateHealthBar(hp , initHp);
-
-        Debug.Log($"left HP: {hp}");
 
         if (hp <= 0)
 
