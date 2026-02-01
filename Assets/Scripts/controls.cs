@@ -58,7 +58,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         }
 
         // -------- Attack with cooldown --------
-        if (Keyboard.current.zKey.wasPressedThisFrame && Time.time >= nextAttackTime)
+        if (Keyboard.current.cKey.wasPressedThisFrame && Time.time >= nextAttackTime)
         {
             attacking = true;
             nextAttackTime = Time.time + attackCooldown;

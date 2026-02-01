@@ -29,7 +29,7 @@ public class Arena : MonoBehaviour
         Assert.IsTrue(gates.Length > 0 , "error , no gate in array.");
     }
 
-    [ContextMenu(nameof(CloseGate))]
+    [ContextMenu("關門")]
     public void CloseGate()
     {
         foreach (var gate in gates)
@@ -45,7 +45,7 @@ public class Arena : MonoBehaviour
         }
     }
 
-    [ContextMenu(nameof(OpenGate))]
+    [ContextMenu("開門")]
     public void OpenGate()
     {
         foreach (var gate in gates)
