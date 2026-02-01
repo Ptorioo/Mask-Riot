@@ -47,8 +47,6 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
-
-            SpawnLevelEnemies(currentLevelIndex);
         }
     }
 
@@ -60,5 +58,14 @@ public class GameManager : MonoBehaviour
     public bool IsLastLevel()
     {
         return currentLevelIndex >= levelEnemiesCount.Count;
+    }
+
+    public void GoNextLevel()
+    {
+        SpawnLevelEnemies(currentLevelIndex);
+        foreach (var mask in FindObjectsByType<Mask>(FindObjectsInactive.Include , FindObjectsSortMode.InstanceID))
+        {
+            Destroy(mask.gameObject);
+        }
     }
 }
