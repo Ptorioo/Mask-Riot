@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TitleUICtrl : MonoBehaviour
 {
     [SerializeField] private Button startBtn;
     [SerializeField] private Button ExitBtn;
-
-
+    [SerializeField] private EnterGameAnimCtrl egac;
     private void Awake()
     {
         startBtn.onClick.AddListener(StartBtn_OnClick);
@@ -15,10 +15,12 @@ public class TitleUICtrl : MonoBehaviour
     }
     public void StartBtn_OnClick()
     {
-        SceneManager.LoadScene(1);
+        egac.EnterGameAnim();
+
     }
     public void ExitBtn_OnClick()
     {
         Application.Quit();
     }
+
 }
