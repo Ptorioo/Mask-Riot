@@ -11,9 +11,11 @@ public class DeadUICtrl : MonoBehaviour
     public void ShowDeadUI() => gameObject.SetActive(true);
     private void Awake()
     {
-        canvas = GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;
-        canvas.sortingLayerName = "UI";
+        //canvas = GetComponent<Canvas>();
+        //canvas.worldCamera = Camera.main;
+        //canvas.sortingLayerID = SortingLayer.NameToID("UI");
+        //canvas.sortingLayerName = "UI";
+        //canvas.sortingOrder = 10;
         for (int i = 0; i < btmBtn.Length; i++)
         {
             btmBtn[i].onClick.AddListener(BackToMenuBtn_OnClick);
