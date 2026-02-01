@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(SpawnEnemy) , 3 , 3);
+        InvokeRepeating(nameof(SpawnEnemy) , 6 , 3);
     }
 
 #endregion
