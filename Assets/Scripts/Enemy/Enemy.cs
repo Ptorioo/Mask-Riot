@@ -3,6 +3,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
@@ -161,20 +162,50 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         isActive = false;
-        GameObject tempMask = maskObj;
 
+        // --- mask logic unchanged ---
+        GameObject tempMask = maskObj;
         tempMask.SetActive(true);
-        tempMask.transform.SetParent(null, false);
-        tempMask.transform.localPosition = transform.position;
+        tempMask.transform.SetParent(null, true);      // keep world transform
+        tempMask.transform.position = transform.position; // use world position
+        tempMask.transform.localScale = new Vector3(2f, 2f, 1f);
 
         healthBar.gameObject.SetActive(false);
-        renderer.DOColor(new Color(1, 1, 1, 0), 3f)
-                .OnComplete(() =>
-                            {
-                                Destroy(gameObject);
-                            });
-        transform.DOLocalRotateQuaternion(new Quaternion(0f, 0f, -90f, 0f), 1f);
+
+        // --- fade only this object + Atk subtree ---
+        List<SpriteRenderer> fadeTargets = new List<SpriteRenderer>();
+
+        // 1. this object's renderer (if any)
+        if (TryGetComponent<SpriteRenderer>(out var selfRenderer))
+            fadeTargets.Add(selfRenderer);
+
+        // 2. Atk and its children
+        Transform atk = transform.Find("Atk");
+        if (atk != null)
+        {
+            fadeTargets.AddRange(atk.GetComponentsInChildren<SpriteRenderer>());
+        }
+
+        // fade
+        foreach (var r in fadeTargets)
+        {
+            r.DOColor(
+                new Color(r.color.r, r.color.g, r.color.b, 0f),
+                3f
+            );
+        }
+
+        // rotation
+        transform.DOLocalRotate(new Vector3(0, 0, -90f), 1f);
+
+        // destroy after fade
+        DOVirtual.DelayedCall(1f, () =>
+        {
+            Destroy(gameObject);
+        });
     }
+
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.TryGetComponent<PlayerHorizontalMovement>(out PlayerHorizontalMovement pplayer))

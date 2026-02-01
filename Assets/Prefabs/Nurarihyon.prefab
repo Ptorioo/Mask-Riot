@@ -187,16 +187,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6f415f66eacbb4eb82b5652d7061b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  player: {fileID: 0}
   maskObj: {fileID: 2292938439020157633}
   body: {fileID: 5147961028899955590}
   col2D: {fileID: 914981102259543576}
   fac: 3
-  speed: 1
-  attackValue: 1
+  speed: 2
+  attackValue: 2
   distanceRange: 2
   cooldown: 2
-  initHp: 10
+  initHp: 5
   healthBar: {fileID: 5442492144964434985}
   hp: 0
   atkAnim: {fileID: 8069543764099650813}
