@@ -100,3 +100,5 @@ InitTestScene*.unity*
 .idea
 Assets/Plugins/Demigiant/DOTween/Editor
 Exe
+WEBGL
+WEBGL.zip
