@@ -231,7 +231,6 @@ MonoBehaviour:
   fac: 1
   speed: 0.5
   attackValue: 1
-  distanceRange: 2
   cooldown: 2
   initHp: 10
   healthBar: {fileID: 8435849486860665304}
@@ -280,7 +279,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
