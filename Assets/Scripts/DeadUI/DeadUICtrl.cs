@@ -13,6 +13,7 @@ public class DeadUICtrl : MonoBehaviour
     {
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
+        canvas.sortingLayerName = "UI";
         for (int i = 0; i < btmBtn.Length; i++)
         {
             btmBtn[i].onClick.AddListener(BackToMenuBtn_OnClick);
