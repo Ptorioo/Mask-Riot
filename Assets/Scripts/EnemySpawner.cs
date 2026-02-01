@@ -79,6 +79,16 @@ public class EnemySpawner : MonoBehaviour
         Invoke(nameof(CancelSpawnAll) , 6 + enemyCount * secondOrNextEnemySpawnRate);
     }
 
+    private float infiniteLevelSpawnTime = 6f;
+
+    public void StartSpawnForInfiniteLevels()
+    {
+        SpawnEnemyForAll();
+        Invoke(nameof(StartSpawnForInfiniteLevels) , infiniteLevelSpawnTime);
+        infiniteLevelSpawnTime *= 0.95f;
+        infiniteLevelSpawnTime =  Mathf.Min(0.1f , infiniteLevelSpawnTime);
+    }
+
     private void CancelSpawnFor1Type()
     {
         CancelInvoke(nameof(SpawnEnemyFor1Type));

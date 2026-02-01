@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private List<int>    levelEnemiesCount = new List<int>() { 5 , 10, 9999 };
-    private int          currentLevelIndex = 0;
+    private List<int>    levelEnemiesCount = new List<int>() { 5 , 10 , 9999 };
+    private int          currentLevelIndex;
     private int          enemyToKillCountForLevel;
     private Arena        arena;
     private EnemySpawner enemySpawners;
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
                 enemySpawners.StartSpawnAllEnemies(levelEnemiesCount[levelIndex]);
                 break;
             case 2 :
-                enemySpawners.StartSpawnAllEnemies(levelEnemiesCount[levelIndex]);
+                enemySpawners.StartSpawnForInfiniteLevels();
                 break;
         }
 
@@ -45,11 +44,6 @@ public class GameManager : MonoBehaviour
         {
             arena.OpenGate();
             currentLevelIndex++;
-            // game clear
-            if (currentLevelIndex >= levelEnemiesCount.Count)
-            {
-                return;
-            }
         }
     }
 
@@ -66,6 +60,7 @@ public class GameManager : MonoBehaviour
     public void GoNextLevel()
     {
         SpawnLevelEnemies(currentLevelIndex);
+        // 刪除Masks
         foreach (var mask in FindObjectsByType<Mask>(FindObjectsInactive.Include , FindObjectsSortMode.InstanceID))
         {
             Destroy(mask.gameObject);

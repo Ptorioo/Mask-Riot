@@ -150,15 +150,17 @@ public class Enemy : MonoBehaviour
         DieEventHandler.Invoke(this , EventArgs.Empty);
 
         // --- mask logic unchanged ---
-        GameObject tempMask = maskObj;
-        tempMask.SetActive(true);
-        tempMask.transform.SetParent(null , true);          // keep world transform
-        tempMask.transform.position   = transform.position; // use world position
-        tempMask.transform.localScale = new Vector3(2f , 2f , 1f);
-
-        if (Random.value < 0.5f)
+        if (maskObj != null)
         {
-            Destroy(tempMask);
+            var tempMask = maskObj;
+            tempMask.SetActive(true);
+            tempMask.transform.SetParent(null , true);          // keep world transform
+            tempMask.transform.position   = transform.position; // use world position
+            tempMask.transform.localScale = new Vector3(2f , 2f , 1f);
+            if (Random.value < 0.5f)
+            {
+                Destroy(tempMask);
+            }
         }
 
         healthBar.gameObject.SetActive(false);
