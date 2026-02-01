@@ -156,6 +156,11 @@ public class Enemy : MonoBehaviour
         tempMask.transform.position   = transform.position; // use world position
         tempMask.transform.localScale = new Vector3(2f , 2f , 1f);
 
+        if (Random.value < 0.5f)
+        {
+            Destroy(tempMask);
+        }
+
         healthBar.gameObject.SetActive(false);
 
         // --- fade only this object + Atk subtree ---

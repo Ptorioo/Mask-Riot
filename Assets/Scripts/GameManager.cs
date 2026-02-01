@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private List<int>    levelEnemiesCount = new List<int>() { 10 , 20 };
+    private List<int>    levelEnemiesCount = new List<int>() { 5 , 10, 15 };
     private int          currentLevelIndex = 0;
     private int          enemyToKillCountForLevel;
     private Arena        arena;
@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
                 enemySpawners.StartSpawnFirstLevelEnemies(levelEnemiesCount[levelIndex]);
                 break;
             case 1 :
+                enemySpawners.StartSpawnAllEnemies(levelEnemiesCount[levelIndex]);
+                break;
+            case 2 :
                 enemySpawners.StartSpawnAllEnemies(levelEnemiesCount[levelIndex]);
                 break;
         }
