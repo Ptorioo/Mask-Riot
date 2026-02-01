@@ -1,17 +1,23 @@
-using System;
+#region
+
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+
+#endregion
 
 public class Mask : MonoBehaviour
 {
-    public Faction faction;
+#region Private Variables
 
-    // How close do you need to be? (1.5 units is usually good)
-    [SerializeField]
-    private float pickupRange = 1.5f;
+    private Faction faction = Faction.Skeleton;
 
     [SerializeField]
     private GameObject hint;
+
+#endregion
+
+#region Unity events
 
     private void Start()
     {
@@ -20,22 +26,32 @@ public class Mask : MonoBehaviour
 
     private void Update()
     {
-        // 1. Safety Check: Does the player exist?
-        if (PlayerHorizontalMovement.Instance == null) return;
+        // hint shows.
+        if (!hint.activeSelf) return;
+        if (Keyboard.current.eKey.wasPressedThisFrame) PerformPickup();
+    }
 
-        // 2. MATH CHECK: Calculate distance directly
-        float distance = Vector2.Distance(transform.position , PlayerHorizontalMovement.Instance.transform.position);
+#endregion
 
-        // 3. Logic: If close enough AND pressing E
-        if (distance <= pickupRange)
-        {
-            hint.SetActive(true);
-            if (Keyboard.current.eKey.wasPressedThisFrame)
-            {
-                PerformPickup();
-            }
-        }
-        else
+#region Public Methods
+
+    public void SetFaction(Faction fac)
+    {
+        faction = fac;
+    }
+
+#endregion
+
+#region Private Methods
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.TryGetComponent(out PlayerController _)) hint.SetActive(true);
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.TryGetComponent(out PlayerController _))
         {
             hint.SetActive(false);
         }
@@ -43,22 +59,12 @@ public class Mask : MonoBehaviour
 
     private void PerformPickup()
     {
-        if (faction == Faction.PlayerCharacter)
-        {
-            Debug.LogWarning("Mask Faction is Default! Ignoring.");
-            return;
-        }
-
-        // CHANGE: Use GetComponentInChildren to find the sprite even if it's on a sub-object
-        var renderer = GetComponent<SpriteRenderer>();
-        PlayerHorizontalMovement.Instance.EquipMask(faction , renderer.sprite);
+        Assert.IsTrue(faction != Faction.PlayerCharacter);
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        var player         = FindFirstObjectByType<PlayerController>();
+        player.EquipMask(faction , spriteRenderer.sprite);
         Destroy(gameObject);
     }
 
-    // Optional: Draw a circle in the Editor so you can see the range
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position , pickupRange);
-    }
+#endregion
 }

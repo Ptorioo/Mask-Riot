@@ -10,6 +10,11 @@ public class EnemySpawner : MonoBehaviour
 {
 #region Private Variables
 
+    private readonly int firstEnemySpawnTime        = 6;
+    private readonly int secondOrNextEnemySpawnRate = 3;
+
+    private float infiniteLevelSpawnTime = 6f;
+
     [SerializeField]
     private GameObject[] enemyPrefab;
 
@@ -19,16 +24,54 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private float maX;
 
-    private int firstEnemySpawnTime        = 6;
-    private int secondOrNextEnemySpawnRate = 3;
-
 #endregion
 
-#region Unity events
+#region Public Methods
+
+    public void StartSpawnAllEnemies(int enemyCount)
+    {
+        InvokeRepeating(nameof(SpawnEnemyForAll) , firstEnemySpawnTime , secondOrNextEnemySpawnRate);
+
+        // 全部產生完畢，取消怪物產生
+        Invoke(nameof(CancelSpawnAll) , 6 + enemyCount * secondOrNextEnemySpawnRate);
+    }
+
+    public void StartSpawnFirstLevelEnemies(int enemyCount)
+    {
+        InvokeRepeating(nameof(SpawnEnemyFor1Type) , firstEnemySpawnTime , secondOrNextEnemySpawnRate);
+
+        // 全部產生完畢，取消怪物產生
+        Invoke(nameof(CancelSpawnFor1Type) , 6 + enemyCount * secondOrNextEnemySpawnRate);
+    }
+
+    public void StartSpawnForInfiniteLevels()
+    {
+        SpawnEnemyForAll();
+        Invoke(nameof(StartSpawnForInfiniteLevels) , infiniteLevelSpawnTime);
+        infiniteLevelSpawnTime *= 0.95f;
+        infiniteLevelSpawnTime =  Mathf.Max(0.25f , infiniteLevelSpawnTime);
+    }
 
 #endregion
 
 #region Private Methods
+
+    private void CancelSpawnAll()
+    {
+        CancelInvoke(nameof(SpawnEnemyForAll));
+    }
+
+    private void CancelSpawnFor1Type()
+    {
+        CancelInvoke(nameof(SpawnEnemyFor1Type));
+    }
+
+    private void SpawnEnemy(GameObject prefab)
+    {
+        var x   = Random.Range(minX , maX);
+        var pos = new Vector3(x , -3.6f , 0);
+        Instantiate(prefab , pos , quaternion.identity);
+    }
 
     private void SpawnEnemyFor1Type()
     {
@@ -42,15 +85,6 @@ public class EnemySpawner : MonoBehaviour
         SpawnEnemy(prefab);
     }
 
-    private void SpawnEnemy(GameObject prefab)
-    {
-        var x   = Random.Range(minX , maX);
-        var pos = new Vector3(x , -3.6f , 0);
-        Instantiate(prefab , pos , quaternion.identity);
-    }
-
-#endregion
-
     [ContextMenu("測試產生10隻，第一關怪物")]
     private void TestStartSpawnFirstLevelEnemies()
     {
@@ -63,39 +97,5 @@ public class EnemySpawner : MonoBehaviour
         StartSpawnAllEnemies(20);
     }
 
-    public void StartSpawnFirstLevelEnemies(int enemyCount)
-    {
-        InvokeRepeating(nameof(SpawnEnemyFor1Type) , firstEnemySpawnTime , secondOrNextEnemySpawnRate);
-
-        // 全部產生完畢，取消怪物產生
-        Invoke(nameof(CancelSpawnFor1Type) , 6 + enemyCount * secondOrNextEnemySpawnRate);
-    }
-
-    public void StartSpawnAllEnemies(int enemyCount)
-    {
-        InvokeRepeating(nameof(SpawnEnemyForAll) , firstEnemySpawnTime , secondOrNextEnemySpawnRate);
-
-        // 全部產生完畢，取消怪物產生
-        Invoke(nameof(CancelSpawnAll) , 6 + enemyCount * secondOrNextEnemySpawnRate);
-    }
-
-    private float infiniteLevelSpawnTime = 6f;
-
-    public void StartSpawnForInfiniteLevels()
-    {
-        SpawnEnemyForAll();
-        Invoke(nameof(StartSpawnForInfiniteLevels) , infiniteLevelSpawnTime);
-        infiniteLevelSpawnTime *= 0.95f;
-        infiniteLevelSpawnTime =  Mathf.Max(0.25f , infiniteLevelSpawnTime);
-    }
-
-    private void CancelSpawnFor1Type()
-    {
-        CancelInvoke(nameof(SpawnEnemyFor1Type));
-    }
-
-    private void CancelSpawnAll()
-    {
-        CancelInvoke(nameof(SpawnEnemyForAll));
-    }
+#endregion
 }
