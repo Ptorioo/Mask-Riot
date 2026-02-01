@@ -411,6 +411,7 @@ MonoBehaviour:
   _animator: {fileID: 9023175823110753452}
   healthBar: {fileID: 6652713729947298261}
   maskLayer: {fileID: 8111065708807740484}
+  uiDead: {fileID: 7153429660924131724, guid: 7699e920398ce3f40a6b8ac9c6f5f02e, type: 3}
 --- !u!61 &7377077800982678649
 BoxCollider2D:
   m_ObjectHideFlags: 0

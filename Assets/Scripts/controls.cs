@@ -67,9 +67,12 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField]
     private SpriteRenderer maskLayer;
 
-#endregion
+    [SerializeField]
+    private GameObject uiDead;
 
-#region Unity events
+    #endregion
+
+    #region Unity events
 
     void Awake()
 
@@ -161,6 +164,16 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
         isDead = true;
         healthBar.gameObject.SetActive(false);
+
+        if (uiDead != null)
+        {
+            Debug.Log("UI_Dead activated");
+            uiDead.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("uiDead is NULL");
+        }
 
         // --- fade only this object + Atk subtree ---
         List<SpriteRenderer> fadeTargets = new List<SpriteRenderer>();
