@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
 #region Private Variables
 
     [SerializeField]
-    private GameObject enemyPrefab;
+    private GameObject[] enemyPrefab;
 
     [SerializeField]
     private float minX;
@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
     {
         var x   = Random.Range(minX , maX);
         var pos = new Vector3(x , -3.6f , 0);
-        Instantiate(enemyPrefab , pos , quaternion.identity);
+        Instantiate(enemyPrefab[Random.Range(0, enemyPrefab.Length)] , pos , quaternion.identity);
     }
 
 #endregion
