@@ -1207,10 +1207,8 @@ MonoBehaviour:
   openY: 0.2
   closeY: -1.9
   walls:
-  - {fileID: 4825326076736364696}
   - {fileID: 5004205897082231757}
   gates:
-  - {fileID: 6543118713907873281}
   - {fileID: 5234426384125122560}
   openWallColliderSize: 1.95
   closeWallColliderSize: 2.8
