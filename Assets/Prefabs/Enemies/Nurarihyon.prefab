@@ -50,11 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maskObj: {fileID: 7427118615249561585}
   body: {fileID: 1926128242180226964}
-  faction: 2
-  speed: 2
-  attackValue: 2
-  attackCooldown: 2
-  initHp: 5
+  data: {fileID: 11400000, guid: 5df418e44efb6bc4b9bb3a1d34ef9412, type: 2}
   healthBar: {fileID: 5442492144964434985}
   blade: {fileID: 7212221852754306480}
 --- !u!50 &208041521233449872
@@ -360,12 +356,24 @@ PrefabInstance:
       value: Blade
       objectReference: {fileID: 0}
     - target: {fileID: 3112308218142850271, guid: 7ad96377f742dc442a9c0583e43b7db2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112308218142850271, guid: 7ad96377f742dc442a9c0583e43b7db2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112308218142850271, guid: 7ad96377f742dc442a9c0583e43b7db2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112308218142850271, guid: 7ad96377f742dc442a9c0583e43b7db2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.16
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 3112308218142850271, guid: 7ad96377f742dc442a9c0583e43b7db2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.52
+      value: -1.02
       objectReference: {fileID: 0}
     - target: {fileID: 3112308218142850271, guid: 7ad96377f742dc442a9c0583e43b7db2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -401,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7750548219524062348, guid: 7ad96377f742dc442a9c0583e43b7db2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

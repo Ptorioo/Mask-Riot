@@ -110,11 +110,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maskObj: {fileID: 1539097503978269237}
-  body: {fileID: 5147961028899955590}
-  modelScale: 2
+  body: {fileID: 8309126579141781814}
   faction: 1
   speed: 0.5
   attackValue: 1
+  data: {fileID: 11400000, guid: 244fa439aa8567a4fb084f6cd3913c31, type: 2}
   attackCooldown: 1.5
   initHp: 10
   healthBar: {fileID: 8435849486860665304}

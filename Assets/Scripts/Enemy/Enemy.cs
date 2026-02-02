@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 {
 #region Public Variables
 
-    public Faction Faction => faction;
+    public Faction Faction { get; private set; }
 
 #endregion
 
@@ -31,16 +31,16 @@ public class Enemy : MonoBehaviour
     }
 
     private PlayerController player;
-    private SpriteRenderer   renderer;
     private int              dir = 1;
     private bool             isActive;
     private Enemystate       state;
 
-    private float distanceRange = 3.5f;
+    private readonly float detectTargetRange = 3.5f;
 
-    private int hp;
-
+    private int    hp;
     private double timer;
+    private float  moveSpeed;
+    private float  attackCooldown;
 
     [SerializeField]
     private Mask maskObj;
@@ -49,19 +49,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer body;
 
     [SerializeField]
-    private Faction faction;
-
-    [SerializeField]
-    private float speed;
-
-    [SerializeField]
-    private int attackValue;
-
-    [SerializeField]
-    private float attackCooldown = 1f;
-
-    [SerializeField]
-    private int initHp;
+    private EnemyData data;
 
     [SerializeField]
     private HealthBar healthBar;
@@ -75,16 +63,14 @@ public class Enemy : MonoBehaviour
 
     public void Start()
     {
-        hp       = initHp;
-        isActive = true;
-        player   = FindFirstObjectByType<PlayerController>();
-
-        // REVERTED: Back to 'renderer' (ignores the warning)
-        renderer = GetComponent<SpriteRenderer>();
-
-        state = Enemystate.Move;
-
-        // transform.localScale = new Vector3(modelScale , modelScale , 1f);
+        hp             = data.hp;
+        moveSpeed      = data.moveSpeed;
+        attackCooldown = data.attackCooldown;
+        body.sprite    = data.bodySprite;
+        isActive       = true;
+        Faction        = data.faction;
+        player         = FindFirstObjectByType<PlayerController>();
+        state          = Enemystate.Move;
     }
 
     private void Update()
@@ -99,7 +85,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damageValue)
     {
         hp -= damageValue; //damage
-        healthBar.UpdateHealthBar(hp , initHp);
+        healthBar.UpdateHealthBar(hp , data.hp);
         if (hp <= 0)
         {
             hp    = 0;
@@ -116,7 +102,7 @@ public class Enemy : MonoBehaviour
 
     private void Attack()
     {
-        blade.StartAttack(faction , attackValue);
+        blade.StartAttack(Faction , data.atk);
         // var target = ScanForTarget();
         // if (target == null) return;
         if (blade.IsAttackEnded() == false)
@@ -178,7 +164,7 @@ public class Enemy : MonoBehaviour
         maskObj.transform.SetParent(null , true);          // keep world transform
         maskObj.transform.position   = transform.position; // use world position
         maskObj.transform.localScale = new Vector3(2f , 2f , 1f);
-        maskObj.SetFaction(faction);
+        maskObj.SetFaction(Faction);
         // 隨機掉面具，50% 掉落
         if (Random.value < 0.5f) Destroy(maskObj);
     }
@@ -207,8 +193,8 @@ public class Enemy : MonoBehaviour
 
         body.transform.localScale = onLeft ? new Vector2(-1 , 1) : Vector2.one;
 
-        transform.Translate(new Vector3(speed * dir * Time.deltaTime , 0 , 0));
-        if (GetDistanceWithPlayer() <= distanceRange)
+        transform.Translate(new Vector3(moveSpeed * dir * Time.deltaTime , 0 , 0));
+        if (GetDistanceWithPlayer() <= detectTargetRange)
         {
             state = Enemystate.Attack;
         }
@@ -221,13 +207,13 @@ public class Enemy : MonoBehaviour
     private Transform ScanForTarget()
     {
         // 敵人與玩家不同陣營則以玩家為目標
-        if (player.Faction != faction) return player.transform;
+        if (player.Faction != Faction) return player.transform;
 
         // 假設使用 Physics.OverlapSphere 獲取周圍物件
         var colliders = Physics2D.OverlapCircleAll(transform.position , 100f);
         foreach (var col in colliders)
         {
-            if (col.TryGetComponent<Enemy>(out var other) && other.Faction != faction)
+            if (col.TryGetComponent<Enemy>(out var other) && other.Faction != Faction)
             {
                 return other.transform;
             }
@@ -266,7 +252,7 @@ public class Enemy : MonoBehaviour
             yield return null;
             if (timer >= attackCooldown)
             {
-                state = GetDistanceWithPlayer() > distanceRange ? Enemystate.Move : Enemystate.Attack;
+                state = GetDistanceWithPlayer() > detectTargetRange ? Enemystate.Move : Enemystate.Attack;
             }
         }
     }
