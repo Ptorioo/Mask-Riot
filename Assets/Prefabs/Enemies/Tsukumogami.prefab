@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maskObj: {fileID: 5647014583270501329}
-  body: {fileID: 5147961028899955590}
+  body: {fileID: 8309126579141781814}
   modelScale: 2
   faction: 3
   speed: 1
@@ -181,7 +181,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.9, y: 1.43}
+  m_Size: {x: 0.9, y: 2.31}
   m_Direction: 0
 --- !u!1001 &798193792939236823
 PrefabInstance:

@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     private          Rigidbody2D    rb;
     private          SpriteRenderer myRenderer; // (NEW) We cache this to change colors efficiently
     private          bool           isGrounded;
-    private          float          originalScaleX;
     private          float          faceDirection;
 
     private Faction faction;
@@ -51,6 +50,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private SpriteRenderer mask;
 
+    [SerializeField]
+    private SpriteRenderer body;
+
 #endregion
 
 #region Unity events
@@ -59,9 +61,8 @@ public class PlayerController : MonoBehaviour
     {
         Assert.IsNotNull(mask , "mask should not be null.");
 
-        rb             = GetComponent<Rigidbody2D>();
-        originalScaleX = Mathf.Abs(transform.localScale.x);
-        hp             = initHp;
+        rb = GetComponent<Rigidbody2D>();
+        hp = initHp;
     }
 
     private void Update()
@@ -105,10 +106,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DamageEffect()
     {
-        var renderer = GetComponent<SpriteRenderer>();
-        renderer.color = new Color(1 , 0 , 0 , 1);
+        body.color = new Color(1 , 0 , 0 , 1);
         yield return new WaitForSeconds(.2f);
-        renderer.color = new Color(1 , 1 , 1 , 1);
+        body.color = new Color(1 , 1 , 1 , 1);
     }
 
     [ContextMenu(nameof(Die))]
@@ -163,13 +163,13 @@ public class PlayerController : MonoBehaviour
         var right = Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed;
         if (left)
         {
-            faceDirection        = -1f;
-            transform.localScale = new Vector3(-originalScaleX , transform.localScale.y , transform.localScale.z);
+            faceDirection             = -1f;
+            body.transform.localScale = new Vector2(-1 , 1);
         }
         else if (right)
         {
-            faceDirection        = 1f;
-            transform.localScale = new Vector3(originalScaleX , transform.localScale.y , transform.localScale.z);
+            faceDirection             = 1f;
+            body.transform.localScale = Vector2.one;
         }
         else
         {

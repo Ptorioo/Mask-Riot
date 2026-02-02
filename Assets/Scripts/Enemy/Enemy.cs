@@ -46,10 +46,7 @@ public class Enemy : MonoBehaviour
     private Mask maskObj;
 
     [SerializeField]
-    private Collider2D body;
-
-    [SerializeField]
-    private float modelScale = 2f;
+    private SpriteRenderer body;
 
     [SerializeField]
     private Faction faction;
@@ -87,11 +84,7 @@ public class Enemy : MonoBehaviour
 
         state = Enemystate.Move;
 
-        float tall = Random.Range(0 , 16);
-        body.offset = new Vector2(0 , tall / 100f);
-
-        // FIX: Set size immediately using the new variable
-        transform.localScale = new Vector3(modelScale , modelScale , 1f);
+        // transform.localScale = new Vector3(modelScale , modelScale , 1f);
     }
 
     private void Update()
@@ -136,9 +129,9 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator DamageEffect()
     {
-        renderer.color = new Color(1 , 0 , 0 , 1);
+        body.color = new Color(1 , 0 , 0 , 1);
         yield return new WaitForSeconds(.2f);
-        renderer.color = new Color(1 , 1 , 1 , 1);
+        body.color = new Color(1 , 1 , 1 , 1);
     }
 
     [ContextMenu(nameof(Die))]
@@ -209,11 +202,10 @@ public class Enemy : MonoBehaviour
         // FIX: If no target found, STOP. Don't run the next lines.
         if (targetTransform == null) return;
 
-        var LR = targetTransform.position.x < transform.position.x;
-        dir = LR ? -1 : 1;
+        var onLeft = targetTransform.position.x < transform.position.x;
+        dir = onLeft ? -1 : 1;
 
-        // FIX: Use modelScale variable here
-        transform.localScale = new Vector3(dir * modelScale , modelScale , 1);
+        body.transform.localScale = onLeft ? new Vector2(-1 , 1) : Vector2.one;
 
         transform.Translate(new Vector3(speed * dir * Time.deltaTime , 0 , 0));
         if (GetDistanceWithPlayer() <= distanceRange)
