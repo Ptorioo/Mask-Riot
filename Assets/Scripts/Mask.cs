@@ -1,13 +1,18 @@
 #region
 
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.InputSystem;
 
 #endregion
 
 public class Mask : MonoBehaviour
 {
+#region Public Variables
+
+    public Faction Faction => faction;
+    public Sprite  Sprite  => body.sprite;
+
+#endregion
+
 #region Private Variables
 
     [SerializeField]
@@ -28,16 +33,19 @@ public class Mask : MonoBehaviour
         hint.SetActive(false);
     }
 
-    private void Update()
-    {
-        // hint shows.
-        if (!hint.activeSelf) return;
-        if (Keyboard.current.eKey.wasPressedThisFrame) PerformPickup();
-    }
-
 #endregion
 
 #region Public Methods
+
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
+    }
+
+    public void HideHint()
+    {
+        hint.SetActive(false);
+    }
 
     public void SetFaction(Faction fac , Sprite maskSprite)
     {
@@ -45,29 +53,9 @@ public class Mask : MonoBehaviour
         body.sprite = maskSprite;
     }
 
-#endregion
-
-#region Private Methods
-
-    private void OnTriggerEnter2D(Collider2D col)
+    public void ShowHint()
     {
-        if (col.gameObject.TryGetComponent(out PlayerController _)) hint.SetActive(true);
-    }
-
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.gameObject.TryGetComponent(out PlayerController _))
-        {
-            hint.SetActive(false);
-        }
-    }
-
-    private void PerformPickup()
-    {
-        Assert.IsTrue(faction != Faction.PlayerCharacter);
-        var player = FindFirstObjectByType<PlayerController>();
-        player.EquipMask(faction , body.sprite);
-        Destroy(gameObject);
+        hint.SetActive(true);
     }
 
 #endregion

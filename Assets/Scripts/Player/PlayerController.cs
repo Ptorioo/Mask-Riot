@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private bool           isGrounded;
     private float          faceDirection;
 
+    private Mask pickableMask;
+
     [Header("Attack")]
     [SerializeField]
     private float attackCooldown = 1f;
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private HealthBar healthBar;
 
     [SerializeField]
-    private SpriteRenderer mask;
+    private SpriteRenderer maskBody;
 
     [SerializeField]
     private SpriteRenderer body;
@@ -49,13 +51,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerCharacterData data;
 
+    [SerializeField]
+    private BoxCollider2D hurtBox;
+
 #endregion
 
 #region Unity events
 
     private void Awake()
     {
-        Assert.IsNotNull(mask , "mask should not be null.");
+        Assert.IsNotNull(maskBody , "mask should not be null.");
 
         rb = GetComponent<Rigidbody2D>();
         Assert.IsNotNull(rb , "Error , rigidbody2d should in this GameObject!");
@@ -74,18 +79,12 @@ public class PlayerController : MonoBehaviour
         HandleMoveVelocity();
         HandleJumpAction();
         HandleAttackAction();
+        HandlePickMask();
     }
 
 #endregion
 
 #region Public Methods
-
-    public void EquipMask(Faction newFaction , Sprite maskSprite)
-    {
-        Faction      = newFaction;
-        mask.enabled = true;
-        mask.sprite  = maskSprite;
-    }
 
     public void TakeDamage(int damageValue)
     {
@@ -111,6 +110,15 @@ public class PlayerController : MonoBehaviour
         body.color = new Color(1 , 0 , 0 , 1);
         yield return new WaitForSeconds(.2f);
         body.color = new Color(1 , 1 , 1 , 1);
+    }
+
+    private void DetectionContactMask(Collider2D col)
+    {
+        // 只顯示第一個，之後的面具不顯示
+        if (pickableMask != null) return;
+        if (!col.TryGetComponent<Mask>(out var mask)) return;
+        mask.ShowHint();
+        pickableMask = mask;
     }
 
     [ContextMenu(nameof(Die))]
@@ -148,6 +156,13 @@ public class PlayerController : MonoBehaviour
 
         // rotation
         transform.DOLocalRotate(new Vector3(0 , 0 , -90f) , 1f);
+    }
+
+    private void EquipMask(Faction newFaction , Sprite maskSprite)
+    {
+        Faction          = newFaction;
+        maskBody.enabled = true;
+        maskBody.sprite  = maskSprite;
     }
 
     private void HandleAttackAction()
@@ -192,9 +207,37 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(faceDirection * data.moveSpeed , rb.linearVelocity.y);
     }
 
+    private void HandlePickMask()
+    {
+        if (Keyboard.current.eKey.wasPressedThisFrame) PerformPickup();
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.contacts[0].normal.y > 0.5f) isGrounded = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        DetectionContactMask(col);
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (!col.TryGetComponent<Mask>(out var mask)) return;
+        mask.HideHint();
+        pickableMask = null;
+    }
+
+    private void PerformPickup()
+    {
+        if (pickableMask == null) return;
+        EquipMask(pickableMask.Faction , pickableMask.Sprite);
+        pickableMask.DestroyThis();
+        pickableMask = null;
+        var hurtboxContactResults = new List<Collider2D>();
+        hurtBox.Overlap(hurtboxContactResults);
+        hurtboxContactResults.ForEach(DetectionContactMask);
     }
 
 #endregion
