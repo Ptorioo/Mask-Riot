@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 {
 #region Public Variables
 
-    public Faction Faction = Faction.PlayerCharacter;
+    public Faction Faction { get; private set; } = Faction.PlayerCharacter;
 
 #endregion
 
@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer myRenderer; // (NEW) We cache this to change colors efficiently
     private bool           isGrounded;
     private float          faceDirection;
-
-    private Faction faction;
 
     [Header("Attack")]
     [SerializeField]
@@ -78,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     public void EquipMask(Faction newFaction , Sprite maskSprite)
     {
-        faction      = newFaction;
+        Faction      = newFaction;
         mask.enabled = true;
         mask.sprite  = maskSprite;
     }
@@ -150,7 +148,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!Keyboard.current.cKey.wasPressedThisFrame || !(Time.time >= nextAttackTime)) return;
         nextAttackTime = Time.time + attackCooldown;
-        blade.StartAttack(faction , data.atk);
+        blade.StartAttack(Faction , data.atk);
     }
 
     /// <summary>

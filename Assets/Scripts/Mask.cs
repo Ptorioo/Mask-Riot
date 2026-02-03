@@ -10,6 +10,7 @@ public class Mask : MonoBehaviour
 {
 #region Private Variables
 
+    [SerializeField]
     private Faction faction = Faction.Skeleton;
 
     [SerializeField]

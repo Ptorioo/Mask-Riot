@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using DG.Tweening;
 using UnityEngine;
+using Faction_1 = Faction;
 
 #endregion
 
@@ -68,8 +69,9 @@ public class Enemy : MonoBehaviour
         body.sprite    = data.bodySprite;
         isActive       = true;
         Faction        = data.faction;
-        player         = FindFirstObjectByType<PlayerController>();
-        state          = Enemystate.Move;
+        Debug.Log($"{Faction}");
+        player = FindFirstObjectByType<PlayerController>();
+        state  = Enemystate.Move;
     }
 
     private void Update()
