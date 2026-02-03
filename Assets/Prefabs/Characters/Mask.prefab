@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8668504094641948871
 Transform:
   m_ObjectHideFlags: 0
@@ -350,5 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c621dc81ea11040b4befbec56900ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mask
+  faction: 2
   hint: {fileID: 5138813189892135803}
   body: {fileID: 6203238622827830083}

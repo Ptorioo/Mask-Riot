@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
 {
 #region Public Variables
 
+    public bool IsDead { get; private set; }
+
     public Faction Faction { get; private set; }
 
 #endregion
@@ -32,15 +34,16 @@ public class Enemy : MonoBehaviour
 
     private PlayerController player;
     private int              dir = 1;
-    private bool             isActive;
     private Enemystate       state;
 
-    private readonly float detectTargetRange = 3.5f;
+    private readonly float detectTargetRange = 3f;
 
     private int    hp;
     private double timer;
     private float  moveSpeed;
     private float  attackCooldown;
+
+    private Transform target;
 
     [SerializeField]
     private Mask maskObj;
@@ -67,7 +70,6 @@ public class Enemy : MonoBehaviour
         moveSpeed      = data.moveSpeed;
         attackCooldown = data.attackCooldown;
         body.sprite    = data.bodySprite;
-        isActive       = true;
         Faction        = data.faction;
         player         = FindFirstObjectByType<PlayerController>();
         state          = Enemystate.Move;
@@ -103,8 +105,6 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         blade.StartAttack(Faction , data.atk);
-        // var target = ScanForTarget();
-        // if (target == null) return;
         if (blade.IsAttackEnded() == false)
         {
             state = Enemystate.AtkCoolDown;
@@ -123,12 +123,9 @@ public class Enemy : MonoBehaviour
     [ContextMenu(nameof(Die))]
     private void Die()
     {
-        isActive = false;
-
+        IsDead = true;
         DieEventHandler?.Invoke(this , EventArgs.Empty);
-
         DropMask();
-
         healthBar.gameObject.SetActive(false);
 
         // --- fade only this object + Atk subtree ---
@@ -168,9 +165,32 @@ public class Enemy : MonoBehaviour
         // if (Random.value < 0.5f) Destroy(maskObj.gameObject);
     }
 
-    private float GetDistanceWithPlayer()
+    private void FindTarget()
     {
-        var dist = Vector3.Distance(player.transform.position , transform.position);
+        if (player.Faction != Faction && target != player.transform)
+        {
+            target = player.transform;
+        }
+        else if (target == null)
+        {
+            target = ScanForTarget();
+        }
+        else if (target != null)
+        {
+            var targetIsPlayAndSameFaction = target == player.transform && player.Faction == Faction;
+            var targetIsEnemyAndIsDead     = target.TryGetComponent(out Enemy enemy) && enemy.IsDead;
+
+            if (targetIsPlayAndSameFaction || targetIsEnemyAndIsDead) target = ScanForTarget();
+        }
+    }
+
+    private float GetDistanceWithTarget()
+    {
+        Vector2 targetPos = target.transform.position;
+        Vector2 myPos     = transform.position;
+        targetPos.y = 0;
+        myPos.y     = 0;
+        var dist = Vector2.Distance(targetPos , myPos);
         return dist;
     }
 
@@ -182,18 +202,18 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        var targetTransform = ScanForTarget();
+        FindTarget();
 
         // FIX: If no target found, STOP. Don't run the next lines.
-        if (targetTransform == null) return;
+        if (target == null) return;
 
-        var onLeft = targetTransform.position.x < transform.position.x;
+        var onLeft = target.position.x < transform.position.x;
         dir = onLeft ? -1 : 1;
 
         body.transform.localScale = onLeft ? new Vector2(-1 , 1) : Vector2.one;
 
         transform.Translate(new Vector3(moveSpeed * dir * Time.deltaTime , 0 , 0));
-        if (GetDistanceWithPlayer() <= detectTargetRange)
+        if (GetDistanceWithTarget() <= detectTargetRange)
         {
             state = Enemystate.Attack;
         }
@@ -210,16 +230,13 @@ public class Enemy : MonoBehaviour
     /// <returns></returns>
     private Transform ScanForTarget()
     {
-        // 敵人與玩家不同陣營則以玩家為目標
-        if (player.Faction != Faction) return player.transform;
-
         // 假設使用 Physics.OverlapSphere 獲取周圍物件
         var colliders = Physics2D.OverlapCircleAll(transform.position , 100f);
         foreach (var col in colliders)
         {
-            if (col.TryGetComponent<Enemy>(out var other) && other.Faction != Faction)
+            if (col.TryGetComponent<Enemy>(out var otherEnemy) && otherEnemy.Faction != Faction && otherEnemy.IsDead == false)
             {
-                return other.transform;
+                return otherEnemy.transform;
             }
         }
 
@@ -228,23 +245,22 @@ public class Enemy : MonoBehaviour
 
     private void Statement()
     {
-        if (isActive)
+        if (IsDead) return;
+        switch (state)
         {
-            switch (state)
-            {
-                case Enemystate.Rise : break;
-                case Enemystate.Attack :
-                    Attack();
-                    break;
-                case Enemystate.Move :
-                    Move();
-                    break;
-                case Enemystate.AtkCoolDown : break;
-                case Enemystate.gettingDmg :  break;
-                case Enemystate.Dying :
-                    Die();
-                    break;
-            }
+            case Enemystate.Rise : break;
+            case Enemystate.Attack :
+                Attack();
+                break;
+            case Enemystate.Move :
+                Move();
+                break;
+            case Enemystate.AtkCoolDown : break;
+            case Enemystate.gettingDmg :  break;
+            case Enemystate.Dying :
+                Die();
+                break;
+            default : throw new ArgumentOutOfRangeException($"does not handle this state: [{state}]");
         }
     }
 
@@ -256,7 +272,13 @@ public class Enemy : MonoBehaviour
             yield return null;
             if (timer >= attackCooldown)
             {
-                state = GetDistanceWithPlayer() > detectTargetRange ? Enemystate.Move : Enemystate.Attack;
+                if (target == null)
+                {
+                    state = Enemystate.Move;
+                    break;
+                }
+
+                state = GetDistanceWithTarget() > detectTargetRange ? Enemystate.Move : Enemystate.Attack;
             }
         }
     }
