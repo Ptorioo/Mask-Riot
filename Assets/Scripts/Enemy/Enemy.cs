@@ -46,6 +46,9 @@ public class Enemy : MonoBehaviour
     private Transform target;
 
     [SerializeField]
+    private Rigidbody2D rigid2D;
+
+    [SerializeField]
     private Mask maskObj;
 
     [SerializeField]
@@ -151,6 +154,7 @@ public class Enemy : MonoBehaviour
         body.sprite = data.bodySpriteWithNoMask;
         DropMask();
         healthBar.Hide();
+        rigid2D.linearVelocity = new Vector2(10 , 10);
 
         // --- fade only this object + Atk subtree ---
         var fadeTargets = new List<SpriteRenderer>

@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6f415f66eacbb4eb82b5652d7061b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  rigid2D: {fileID: 876556149550099743}
   maskObj: {fileID: 2560116705255748136}
   body: {fileID: 4985180567396912112}
   data: {fileID: 11400000, guid: 244fa439aa8567a4fb084f6cd3913c31, type: 2}
@@ -557,7 +558,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
