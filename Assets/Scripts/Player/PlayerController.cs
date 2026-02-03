@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 {
 #region Public Variables
 
+    public bool IsDead { get; private set; }
+
     public Faction Faction { get; private set; } = Faction.PlayerCharacter;
 
 #endregion
@@ -23,7 +25,6 @@ public class PlayerController : MonoBehaviour
 #region Private Variables
 
     private int            hp;
-    private bool           isDead;
     private float          nextAttackTime;
     private Rigidbody2D    rb;
     private SpriteRenderer myRenderer; // (NEW) We cache this to change colors efficiently
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (isDead) return;
+        if (IsDead) return;
         HandleFaceDirection();
         HandleMoveVelocity();
         HandleJumpAction();
@@ -88,6 +89,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageValue)
     {
+        if (IsDead) return;
         hp -= damageValue; //damage
         healthBar.UpdateHealthBar(hp , data.hp);
         if (hp <= 0)
@@ -125,12 +127,12 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         if (data.isInvincible) return;
-        if (isDead) return;
+        if (IsDead) return;
         DieEventHandler?.Invoke(this , EventArgs.Empty);
         rb.linearVelocity = new Vector2(0 , rb.linearVelocity.y);
 
-        isDead = true;
-        healthBar.gameObject.SetActive(false);
+        IsDead = true;
+        healthBar.Hide();
 
         // --- fade only this object + Atk subtree ---
         var fadeTargets = new List<SpriteRenderer>();

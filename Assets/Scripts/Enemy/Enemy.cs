@@ -87,6 +87,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damageValue)
     {
+        if (IsDead) return;
         hp -= damageValue; //damage
         if (hp <= 0)
         {
@@ -111,7 +112,27 @@ public class Enemy : MonoBehaviour
         {
             state = Enemystate.AtkCoolDown;
             timer = 0;
-            StartCoroutine(TimerCounter());
+            StartCoroutine(AttackCooldownTimer());
+        }
+    }
+
+    private IEnumerator AttackCooldownTimer()
+    {
+        while (timer < attackCooldown)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+            if (timer >= attackCooldown)
+            {
+                FindTarget();
+                if (target == null)
+                {
+                    state = Enemystate.Move;
+                    break;
+                }
+
+                state = GetDistanceWithTarget() > detectTargetRange ? Enemystate.Move : Enemystate.Attack;
+            }
         }
     }
 
@@ -169,7 +190,7 @@ public class Enemy : MonoBehaviour
 
     private void FindTarget()
     {
-        if (player.Faction != Faction && target != player.transform)
+        if (player.Faction != Faction && target != player.transform && player.IsDead == false)
         {
             target = player.transform;
         }
@@ -179,10 +200,12 @@ public class Enemy : MonoBehaviour
         }
         else if (target != null)
         {
-            var targetIsPlayAndSameFaction = target == player.transform && player.Faction == Faction;
-            var targetIsEnemyAndIsDead     = target.TryGetComponent(out Enemy enemy) && enemy.IsDead;
+            var targetIsPlayer                = target == player.transform;
+            var targetIsPlayAndSameFaction    = targetIsPlayer && player.Faction == Faction;
+            var targetIsPlayerAndPlayerIsDead = targetIsPlayer && player.IsDead;
+            var targetIsEnemyAndIsDead        = target.TryGetComponent(out Enemy enemy) && enemy.IsDead;
 
-            if (targetIsPlayAndSameFaction || targetIsEnemyAndIsDead) target = ScanForTarget();
+            if (targetIsPlayAndSameFaction || targetIsEnemyAndIsDead || targetIsPlayerAndPlayerIsDead) target = ScanForTarget();
         }
     }
 
@@ -261,25 +284,6 @@ public class Enemy : MonoBehaviour
             case Enemystate.gettingDmg :  break;
             case Enemystate.Dying :       break;
             default :                     throw new ArgumentOutOfRangeException($"does not handle this state: [{state}]");
-        }
-    }
-
-    private IEnumerator TimerCounter()
-    {
-        while (timer < attackCooldown)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-            if (timer >= attackCooldown)
-            {
-                if (target == null)
-                {
-                    state = Enemystate.Move;
-                    break;
-                }
-
-                state = GetDistanceWithTarget() > detectTargetRange ? Enemystate.Move : Enemystate.Attack;
-            }
         }
     }
 
