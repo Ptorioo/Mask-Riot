@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     }
 
     private PlayerController player;
-    private int              dir = 1;
+    private int              faceDirection = 1;
     private Enemystate       state;
 
     private readonly float detectTargetRange = 3f;
@@ -154,7 +154,7 @@ public class Enemy : MonoBehaviour
         body.sprite = data.bodySpriteWithNoMask;
         DropMask();
         healthBar.Hide();
-        rigid2D.linearVelocity = new Vector2(10 , 10);
+        rigid2D.linearVelocity = new Vector2(-faceDirection * 10 , 10);
 
         // --- fade only this object + Atk subtree ---
         var fadeTargets = new List<SpriteRenderer>
@@ -235,11 +235,11 @@ public class Enemy : MonoBehaviour
         if (target == null) return;
 
         var onLeft = target.position.x < transform.position.x;
-        dir = onLeft ? -1 : 1;
+        faceDirection = onLeft ? -1 : 1;
 
         body.transform.localScale = onLeft ? new Vector2(-1 , 1) : Vector2.one;
 
-        transform.Translate(new Vector3(moveSpeed * dir * Time.deltaTime , 0 , 0));
+        transform.Translate(new Vector3(moveSpeed * faceDirection * Time.deltaTime , 0 , 0));
         if (GetDistanceWithTarget() <= detectTargetRange)
         {
             state = Enemystate.Attack;

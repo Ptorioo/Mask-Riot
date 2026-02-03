@@ -29,9 +29,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D    rb;
     private SpriteRenderer myRenderer; // (NEW) We cache this to change colors efficiently
     private bool           isGrounded;
-    private float          faceDirection;
+    private float          moveDirection;
 
     private Mask pickableMask;
+
+    private int faceDirection = 1;
 
     [Header("Attack")]
     [SerializeField]
@@ -129,7 +131,8 @@ public class PlayerController : MonoBehaviour
         if (data.isInvincible) return;
         if (IsDead) return;
         DieEventHandler?.Invoke(this , EventArgs.Empty);
-        rb.linearVelocity = new Vector2(0 , rb.linearVelocity.y);
+        // rb.linearVelocity      = new Vector2(0 ,                  rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(-faceDirection * 15 , 15);
 
         IsDead = true;
         healthBar.Hide();
@@ -157,7 +160,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // rotation
-        transform.DOLocalRotate(new Vector3(0 , 0 , -90f) , 1f);
+        transform.DOLocalRotate(new Vector3(0 , 0 , 90f) , 1f);
     }
 
     private void EquipMask(Faction newFaction , Sprite maskSprite)
@@ -183,17 +186,19 @@ public class PlayerController : MonoBehaviour
         var right = Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed;
         if (left)
         {
-            faceDirection             = -1f;
+            moveDirection             = -1f;
+            faceDirection             = -1;
             body.transform.localScale = new Vector2(-1 , 1);
         }
         else if (right)
         {
-            faceDirection             = 1f;
+            moveDirection             = 1f;
+            faceDirection             = 1;
             body.transform.localScale = Vector2.one;
         }
         else
         {
-            faceDirection = 0;
+            moveDirection = 0;
         }
     }
 
@@ -206,7 +211,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMoveVelocity()
     {
-        rb.linearVelocity = new Vector2(faceDirection * data.moveSpeed , rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveDirection * data.moveSpeed , rb.linearVelocity.y);
     }
 
     private void HandlePickMask()

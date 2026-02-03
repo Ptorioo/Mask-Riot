@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef78c04af42c4ebbaf2895aad8b66dfd, type: 3}
   m_Name: PlayerCharacterData_ForTest
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerCharacterData
-  isInvincible: 1
+  isInvincible: 0
   jumpForce: 15
   moveSpeed: 12
   atk: 10
-  hp: 10
+  hp: 1
