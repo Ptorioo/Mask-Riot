@@ -58,7 +58,13 @@ public class PlayerController : MonoBehaviour
         Assert.IsNotNull(mask , "mask should not be null.");
 
         rb = GetComponent<Rigidbody2D>();
+        Assert.IsNotNull(rb , "Error , rigidbody2d should in this GameObject!");
+    }
+
+    private void Start()
+    {
         hp = data.hp;
+        blade.EnableSameFactionAttackable();
     }
 
     private void Update()

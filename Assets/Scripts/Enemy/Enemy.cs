@@ -69,9 +69,8 @@ public class Enemy : MonoBehaviour
         body.sprite    = data.bodySprite;
         isActive       = true;
         Faction        = data.faction;
-        Debug.Log($"{Faction}");
-        player = FindFirstObjectByType<PlayerController>();
-        state  = Enemystate.Move;
+        player         = FindFirstObjectByType<PlayerController>();
+        state          = Enemystate.Move;
     }
 
     private void Update()

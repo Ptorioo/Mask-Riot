@@ -21,6 +21,8 @@ public class Blade : MonoBehaviour
 
     private bool inAttackingAnimState;
 
+    private bool sameFactionAttackable;
+
     [SerializeField]
     private Collider2D hitBox;
 
@@ -45,6 +47,11 @@ public class Blade : MonoBehaviour
 #endregion
 
 #region Public Methods
+
+    public void EnableSameFactionAttackable()
+    {
+        sameFactionAttackable = true;
+    }
 
     public bool IsAttackEnded()
     {
@@ -82,7 +89,7 @@ public class Blade : MonoBehaviour
                 }
 
             if (triggeredGameObject.TryGetComponent(out Enemy enemy))
-                if (enemy.Faction != selfFaction)
+                if (enemy.Faction != selfFaction || sameFactionAttackable)
                 {
                     enemy.TakeDamage(damage);
                     attackedTargetsFromSameAttack.Add(enemy.gameObject);
