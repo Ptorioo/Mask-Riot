@@ -1,6 +1,10 @@
+#region
+
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+
+#endregion
 
 namespace DefaultNamespace
 {
@@ -24,6 +28,16 @@ namespace DefaultNamespace
 
     #region Public Methods
 
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
         /// <summary>
         /// 更新目前血條
         /// </summary>
@@ -31,10 +45,8 @@ namespace DefaultNamespace
         /// <param name="max">最大HP</param>
         public void UpdateHealthBar(int current , int max)
         {
-            // Debug.Log($"{current} , {max}"); 
-            // current          = Mathf.Min(current , 0);
-            // current          = Mathf.Max(max , current);
-            // Debug.Log($"{current} , {max}"); 
+            // 被打才會顯示血條
+            if (gameObject.activeSelf == false) Show();
             front.fillAmount = (float)current / max;
         }
 

@@ -73,6 +73,7 @@ public class Enemy : MonoBehaviour
         Faction        = data.faction;
         player         = FindFirstObjectByType<PlayerController>();
         state          = Enemystate.Move;
+        healthBar.Hide();
     }
 
     private void Update()
@@ -87,14 +88,15 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damageValue)
     {
         hp -= damageValue; //damage
-        healthBar.UpdateHealthBar(hp , data.hp);
         if (hp <= 0)
         {
             hp    = 0;
             state = Enemystate.Dying;
+            Die();
             return;
         }
 
+        healthBar.UpdateHealthBar(hp , data.hp);
         StartCoroutine(DamageEffect());
     }
 
@@ -126,7 +128,7 @@ public class Enemy : MonoBehaviour
         IsDead = true;
         DieEventHandler?.Invoke(this , EventArgs.Empty);
         DropMask();
-        healthBar.gameObject.SetActive(false);
+        healthBar.Hide();
 
         // --- fade only this object + Atk subtree ---
         var fadeTargets = new List<SpriteRenderer>();
@@ -257,10 +259,8 @@ public class Enemy : MonoBehaviour
                 break;
             case Enemystate.AtkCoolDown : break;
             case Enemystate.gettingDmg :  break;
-            case Enemystate.Dying :
-                Die();
-                break;
-            default : throw new ArgumentOutOfRangeException($"does not handle this state: [{state}]");
+            case Enemystate.Dying :       break;
+            default :                     throw new ArgumentOutOfRangeException($"does not handle this state: [{state}]");
         }
     }
 
