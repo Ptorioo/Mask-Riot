@@ -18,4 +18,5 @@ MonoBehaviour:
   atk: 1
   hp: 10
   bodySprite: {fileID: 7473920403424214205, guid: 7ebeba75b306e9c49b6aea9d99ea86e7, type: 3}
+  bodySpriteWithNoMask: {fileID: -6042233818139660734, guid: 0434da50c0b005647a2fe6003cd49075, type: 3}
   maskSprite: {fileID: 8396970846225137241, guid: 666d490b410cdec43b40bad8a5f2447b, type: 3}

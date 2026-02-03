@@ -15,6 +15,7 @@ public class EnemyData : ScriptableObject
     public int     atk            = 1;
     public int     hp             = 5;
     public Sprite  bodySprite;
+    public Sprite  bodySpriteWithNoMask;
     public Sprite  maskSprite;
 
 #endregion

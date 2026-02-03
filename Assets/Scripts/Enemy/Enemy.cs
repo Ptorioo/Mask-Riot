@@ -148,18 +148,16 @@ public class Enemy : MonoBehaviour
     {
         IsDead = true;
         DieEventHandler?.Invoke(this , EventArgs.Empty);
+        body.sprite = data.bodySpriteWithNoMask;
         DropMask();
         healthBar.Hide();
 
         // --- fade only this object + Atk subtree ---
-        var fadeTargets = new List<SpriteRenderer>();
-
-        // 1. this object's renderer (if any)
-        if (TryGetComponent<SpriteRenderer>(out var selfRenderer)) fadeTargets.Add(selfRenderer);
-
-        // 2. Atk and its children
-        var atk = transform.Find("Atk");
-        if (atk != null) fadeTargets.AddRange(atk.GetComponentsInChildren<SpriteRenderer>());
+        var fadeTargets = new List<SpriteRenderer>
+        {
+            body ,                               // 1. this object's renderer (if any)
+            blade.GetComponent<SpriteRenderer>() // 2. blade
+        };
 
         // fade
         foreach (var r in fadeTargets)
