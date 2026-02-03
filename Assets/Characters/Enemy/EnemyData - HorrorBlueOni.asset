@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be5843235c749bfa9f8db9ea7c5c020, type: 3}
   m_Name: EnemyData - HorrorBlueOni
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  faction: 1
+  attackCooldown: 1.5
   moveSpeed: 0.5
   atk: 1
-  attackCooldown: 1.5
   hp: 10
-  faction: 1
   bodySprite: {fileID: 7473920403424214205, guid: 7ebeba75b306e9c49b6aea9d99ea86e7, type: 3}
+  maskSprite: {fileID: 8396970846225137241, guid: 666d490b410cdec43b40bad8a5f2447b, type: 3}

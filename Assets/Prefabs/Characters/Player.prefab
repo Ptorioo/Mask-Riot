@@ -306,12 +306,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHorizontalMovement
   Faction: 0
-  initHp: 10
   attackCooldown: 0.5
   blade: {fileID: 7266285589098108651}
   healthBar: {fileID: 6652713729947298261}
   mask: {fileID: 8111065708807740484}
   body: {fileID: 7921675962725707899}
+  data: {fileID: 11400000, guid: 7cbc09cbe4b19704c89152aa9b45de91, type: 2}
 --- !u!1001 &4109789303943396350
 PrefabInstance:
   m_ObjectHideFlags: 0

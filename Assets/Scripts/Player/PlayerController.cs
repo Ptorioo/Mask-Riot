@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using DG.Tweening;
+using Player;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
@@ -12,7 +13,6 @@ using UnityEngine.InputSystem;
 #endregion
 
 public class PlayerController : MonoBehaviour
-
 {
 #region Public Variables
 
@@ -22,20 +22,15 @@ public class PlayerController : MonoBehaviour
 
 #region Private Variables
 
-    private readonly float          moveSpeed = 12f;
-    private readonly float          jumpForce = 15f;
-    private          int            hp;
-    private          bool           isDead;
-    private          float          nextAttackTime;
-    private          Rigidbody2D    rb;
-    private          SpriteRenderer myRenderer; // (NEW) We cache this to change colors efficiently
-    private          bool           isGrounded;
-    private          float          faceDirection;
+    private int            hp;
+    private bool           isDead;
+    private float          nextAttackTime;
+    private Rigidbody2D    rb;
+    private SpriteRenderer myRenderer; // (NEW) We cache this to change colors efficiently
+    private bool           isGrounded;
+    private float          faceDirection;
 
     private Faction faction;
-
-    [SerializeField]
-    private int initHp = 10;
 
     [Header("Attack")]
     [SerializeField]
@@ -54,7 +49,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer body;
 
     [SerializeField]
-    private bool invincible;
+    private PlayerCharacterData data;
 
 #endregion
 
@@ -65,7 +60,7 @@ public class PlayerController : MonoBehaviour
         Assert.IsNotNull(mask , "mask should not be null.");
 
         rb = GetComponent<Rigidbody2D>();
-        hp = initHp;
+        hp = data.hp;
     }
 
     private void Update()
@@ -91,7 +86,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damageValue)
     {
         hp -= damageValue; //damage
-        healthBar.UpdateHealthBar(hp , initHp);
+        healthBar.UpdateHealthBar(hp , data.hp);
         if (hp <= 0)
         {
             hp = 0;
@@ -117,7 +112,7 @@ public class PlayerController : MonoBehaviour
     [ContextMenu(nameof(Die))]
     private void Die()
     {
-        if (invincible) return;
+        if (data.isInvincible) return;
         if (isDead) return;
         DieEventHandler?.Invoke(this , EventArgs.Empty);
         rb.linearVelocity = new Vector2(0 , rb.linearVelocity.y);
@@ -155,7 +150,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!Keyboard.current.cKey.wasPressedThisFrame || !(Time.time >= nextAttackTime)) return;
         nextAttackTime = Time.time + attackCooldown;
-        blade.StartAttack(faction , 1);
+        blade.StartAttack(faction , data.atk);
     }
 
     /// <summary>
@@ -184,13 +179,13 @@ public class PlayerController : MonoBehaviour
     private void HandleJumpAction()
     {
         if (!isGrounded || !Keyboard.current.spaceKey.wasPressedThisFrame) return;
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x , jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x , data.jumpForce);
         isGrounded        = false;
     }
 
     private void HandleMoveVelocity()
     {
-        rb.linearVelocity = new Vector2(faceDirection * moveSpeed , rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(faceDirection * data.moveSpeed , rb.linearVelocity.y);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

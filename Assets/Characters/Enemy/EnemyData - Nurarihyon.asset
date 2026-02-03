@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be5843235c749bfa9f8db9ea7c5c020, type: 3}
   m_Name: EnemyData - Nurarihyon
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  faction: 2
+  attackCooldown: 2
   moveSpeed: 2
   atk: 2
-  attackCooldown: 2
   hp: 5
-  faction: 2
   bodySprite: {fileID: -3117961255060482634, guid: 48e3f0d2d3f26774e90644c0f7c47fe1, type: 3}
+  maskSprite: {fileID: -6943834320350533100, guid: d19dc8dbc29bdcc4eba330f20f3f963a, type: 3}
