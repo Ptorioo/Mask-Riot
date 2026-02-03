@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 #endregion
 
@@ -158,15 +157,14 @@ public class Enemy : MonoBehaviour
                                    });
     }
 
+    [ContextMenu(nameof(DropMask))]
     private void DropMask()
     {
         maskObj.gameObject.SetActive(true);
-        maskObj.transform.SetParent(null , true);          // keep world transform
-        maskObj.transform.position   = transform.position; // use world position
-        maskObj.transform.localScale = new Vector3(2f , 2f , 1f);
-        maskObj.SetFaction(Faction);
+        maskObj.transform.SetParent(null , true); // keep world transform
+        maskObj.SetFaction(Faction , data.maskSprite);
         // 隨機掉面具，50% 掉落
-        if (Random.value < 0.5f) Destroy(maskObj);
+        // if (Random.value < 0.5f) Destroy(maskObj.gameObject);
     }
 
     private float GetDistanceWithPlayer()
@@ -198,6 +196,11 @@ public class Enemy : MonoBehaviour
         {
             state = Enemystate.Attack;
         }
+    }
+
+    private void OnValidate()
+    {
+        if (body.sprite != data.bodySprite) body.sprite = data.bodySprite;
     }
 
     /// <summary>

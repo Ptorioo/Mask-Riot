@@ -19,14 +19,18 @@ public class LevelManager : MonoBehaviour
     private Arena        arena;
     private EnemySpawner enemySpawners;
 
+    [SerializeField]
+    private int initLevel = 1;
+
 #endregion
 
 #region Unity events
 
     void Start()
     {
-        arena         = FindFirstObjectByType<Arena>();
-        enemySpawners = FindFirstObjectByType<EnemySpawner>();
+        currentLevelIndex = Mathf.Min(levelEnemiesCount.Count - 1 , initLevel);
+        arena             = FindFirstObjectByType<Arena>();
+        enemySpawners     = FindFirstObjectByType<EnemySpawner>();
         SpawnLevelEnemies(currentLevelIndex);
         Enemy.DieEventHandler += EnemyDieEventHandler;
     }

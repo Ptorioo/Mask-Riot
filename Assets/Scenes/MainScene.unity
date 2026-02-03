@@ -1246,6 +1246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56123df3946a2ff4a954eaf224918226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  initLevel: 1
 --- !u!114 &846242544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2684,18 +2685,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 846242541}
     m_Modifications:
-    - target: {fileID: 2004862521965709102, guid: 5c015b62df1a5e34b9432c706d60cbaa, type: 3}
-      propertyPath: 'enemyPrefab.Array.data[0]'
-      value: 
-      objectReference: {fileID: 5278089705342564016, guid: d72e140ae58dbff4fa5896d05354a70f, type: 3}
-    - target: {fileID: 2004862521965709102, guid: 5c015b62df1a5e34b9432c706d60cbaa, type: 3}
-      propertyPath: 'enemyPrefab.Array.data[1]'
-      value: 
-      objectReference: {fileID: 5278089705342564016, guid: 264eb54c598c2054f8e883fb8567f476, type: 3}
-    - target: {fileID: 2004862521965709102, guid: 5c015b62df1a5e34b9432c706d60cbaa, type: 3}
-      propertyPath: 'enemyPrefab.Array.data[2]'
-      value: 
-      objectReference: {fileID: 5278089705342564016, guid: 31aad43fd1da29248b23f0d4c3194c69, type: 3}
     - target: {fileID: 2190168502217490770, guid: 5c015b62df1a5e34b9432c706d60cbaa, type: 3}
       propertyPath: m_Name
       value: EnemySpawner

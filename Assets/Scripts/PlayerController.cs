@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private SpriteRenderer body;
 
+    [SerializeField]
+    private bool invincible;
+
 #endregion
 
 #region Unity events
@@ -114,6 +117,7 @@ public class PlayerController : MonoBehaviour
     [ContextMenu(nameof(Die))]
     private void Die()
     {
+        if (invincible) return;
         if (isDead) return;
         DieEventHandler?.Invoke(this , EventArgs.Empty);
         rb.linearVelocity = new Vector2(0 , rb.linearVelocity.y);

@@ -15,6 +15,9 @@ public class Mask : MonoBehaviour
     [SerializeField]
     private GameObject hint;
 
+    [SerializeField]
+    private SpriteRenderer body;
+
 #endregion
 
 #region Unity events
@@ -35,9 +38,10 @@ public class Mask : MonoBehaviour
 
 #region Public Methods
 
-    public void SetFaction(Faction fac)
+    public void SetFaction(Faction fac , Sprite maskSprite)
     {
-        faction = fac;
+        faction     = fac;
+        body.sprite = maskSprite;
     }
 
 #endregion
@@ -60,9 +64,8 @@ public class Mask : MonoBehaviour
     private void PerformPickup()
     {
         Assert.IsTrue(faction != Faction.PlayerCharacter);
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        var player         = FindFirstObjectByType<PlayerController>();
-        player.EquipMask(faction , spriteRenderer.sprite);
+        var player = FindFirstObjectByType<PlayerController>();
+        player.EquipMask(faction , body.sprite);
         Destroy(gameObject);
     }
 

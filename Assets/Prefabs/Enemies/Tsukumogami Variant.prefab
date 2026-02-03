@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5985744292513861526
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.71214
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.21091
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352286234415209594, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985180567396912112, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1728714523517072099, guid: 0b7e9a84ad9cd0047bd0d5f585334976, type: 3}
+    - target: {fileID: 6819288870638153289, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 950a218b274554f40a19cc4677b3bf5c, type: 2}
+    - target: {fileID: 7673270517357623388, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
+      propertyPath: m_Name
+      value: Tsukumogami Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2106999f722132e41bb383b555e87dbf, type: 3}
